@@ -6920,3 +6920,324 @@ Processing by Carriage::ListsController#index as HTML
 Completed 200 OK in 16ms (Views: 12.3ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 1.3ms)
 
 
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 127.0.0.1 at 2026-07-09 22:56:29 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Dummy'*/[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/stefan/.asdf/installs/ruby/3.4.5/lib/ruby/gems/3.4.0/gems/railties-8.1.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/stefan/.asdf/installs/ruby/3.4.5/lib/ruby/gems/3.4.0/gems/railties-8.1.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 1.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 127.0.0.1 at 2026-07-09 22:58:04 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Dummy'*/[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/stefan/.asdf/installs/ruby/3.4.5/lib/ruby/gems/3.4.0/gems/railties-8.1.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/stefan/.asdf/installs/ruby/3.4.5/lib/ruby/gems/3.4.0/gems/railties-8.1.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 1.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 127.0.0.1 at 2026-07-09 22:59:57 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Dummy'*/[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/stefan/.asdf/installs/ruby/3.4.5/lib/ruby/gems/3.4.0/gems/railties-8.1.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/stefan/.asdf/installs/ruby/3.4.5/lib/ruby/gems/3.4.0/gems/railties-8.1.3/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 1.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/carriage" for 127.0.0.1 at 2026-07-09 23:00:01 +0200
+Processing by Carriage::DashboardController#index as HTML
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/dashboard/index.html.erb within layouts/carriage/application
+  [1m[36mCarriage::List Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_lists" LIMIT 1 /*action='index',application='Dummy',controller='dashboard'*/[0m
+  [1m[36mCarriage::List Load (0.1ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" ORDER BY "carriage_lists"."name" ASC /*action='index',application='Dummy',controller='dashboard'*/[0m
+  [1m[36mCarriage::Subscriber Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 1 AND "carriage_subscriptions"."unsubscribed_at" IS NULL /*action='index',application='Dummy',controller='dashboard'*/[0m
+  [1m[36mCarriage::Campaign Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_campaigns" LIMIT 1 /*action='index',application='Dummy',controller='dashboard'*/[0m
+  [1m[36mCarriage::Campaign Load (0.1ms)[0m  [1m[34mSELECT "carriage_campaigns".* FROM "carriage_campaigns" ORDER BY "carriage_campaigns"."created_at" DESC LIMIT 10 /*action='index',application='Dummy',controller='dashboard'*/[0m
+  [1m[36mCarriage::List Load (0.0ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 1 LIMIT 1 /*action='index',application='Dummy',controller='dashboard'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/shared/_status_badge.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/dashboard/index.html.erb within layouts/carriage/application (Duration: 27.0ms | GC: 0.0ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 30.3ms | GC: 0.0ms)
+Completed 200 OK in 56ms (Views: 30.5ms | ActiveRecord: 2.6ms (6 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-07-09 23:00:01 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/carriage/lists/1" for 127.0.0.1 at 2026-07-09 23:01:18 +0200
+Processing by Carriage::ListsController#show as HTML
+  Parameters: {"id" => "1"}
+  [1m[36mCarriage::List Load (0.5ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 1 LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mCarriage::Subscriber Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 1 AND "carriage_subscriptions"."unsubscribed_at" IS NULL /*action='show',application='Dummy',controller='lists'*/[0m
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/lists/show.html.erb within layouts/carriage/application
+  [1m[36mCarriage::Subscriber Load (0.3ms)[0m  [1m[34mSELECT "carriage_subscribers".* FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 1 ORDER BY "carriage_subscribers"."email" ASC LIMIT 20 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mMailkick::Subscription Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 2 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Carriage News' LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mMailkick::Subscription Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 1 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Carriage News' LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/lists/show.html.erb within layouts/carriage/application (Duration: 12.4ms | GC: 0.1ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 12.9ms | GC: 0.1ms)
+Completed 200 OK in 29ms (Views: 13.1ms | ActiveRecord: 1.3ms (5 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/carriage/lists/1/edit" for 127.0.0.1 at 2026-07-09 23:01:24 +0200
+Processing by Carriage::ListsController#edit as HTML
+  Parameters: {"id" => "1"}
+  [1m[36mCarriage::List Load (0.5ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 1 LIMIT 1 /*action='edit',application='Dummy',controller='lists'*/[0m
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/lists/edit.html.erb within layouts/carriage/application
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/lists/_form.html.erb (Duration: 9.8ms | GC: 0.2ms)
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/lists/edit.html.erb within layouts/carriage/application (Duration: 13.1ms | GC: 0.2ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 13.8ms | GC: 0.2ms)
+Completed 200 OK in 26ms (Views: 14.6ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.2ms)
+
+
+Started PATCH "/carriage/lists/1" for 127.0.0.1 at 2026-07-09 23:02:03 +0200
+Processing by Carriage::ListsController#update as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "list" => {"name" => "Carriage News", "description" => "Carriage Newsletter", "fields_text" => "zipcode\r\ncity"}, "commit" => "Update list", "id" => "1"}
+  [1m[36mCarriage::List Load (0.6ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 1 LIMIT 1 /*action='update',application='Dummy',controller='lists'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='update',application='Dummy',controller='lists'*/[0m
+  [1m[36mCarriage::List Update (0.1ms)[0m  [1m[33mUPDATE "carriage_lists" SET "updated_at" = '2026-07-09 21:02:03.133599', "fields" = '[{"name":"zipcode","type":"string"},{"name":"city","type":"string"}]' WHERE "carriage_lists"."id" = 1 /*action='update',application='Dummy',controller='lists'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='update',application='Dummy',controller='lists'*/[0m
+Redirected to http://127.0.0.1:4444/carriage/lists/1
+Completed 302 Found in 17ms (ActiveRecord: 5.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/carriage/lists/1" for 127.0.0.1 at 2026-07-09 23:02:03 +0200
+Processing by Carriage::ListsController#show as HTML
+  Parameters: {"id" => "1"}
+  [1m[36mCarriage::List Load (0.1ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 1 LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mCarriage::Subscriber Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 1 AND "carriage_subscriptions"."unsubscribed_at" IS NULL /*action='show',application='Dummy',controller='lists'*/[0m
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/lists/show.html.erb within layouts/carriage/application
+  [1m[36mCarriage::Subscriber Load (0.2ms)[0m  [1m[34mSELECT "carriage_subscribers".* FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 1 ORDER BY "carriage_subscribers"."email" ASC LIMIT 20 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mMailkick::Subscription Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 2 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Carriage News' LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mMailkick::Subscription Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 1 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Carriage News' LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/lists/show.html.erb within layouts/carriage/application (Duration: 6.5ms | GC: 0.0ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 7.1ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 7.1ms | ActiveRecord: 0.6ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/carriage/lists/1/subscribers/new" for 127.0.0.1 at 2026-07-09 23:02:12 +0200
+Processing by Carriage::SubscribersController#new as HTML
+  Parameters: {"list_id" => "1"}
+  [1m[36mCarriage::List Load (0.3ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 1 LIMIT 1 /*action='new',application='Dummy',controller='subscribers'*/[0m
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/subscribers/new.html.erb within layouts/carriage/application
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/subscribers/new.html.erb within layouts/carriage/application (Duration: 3.9ms | GC: 0.0ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 4.7ms | GC: 0.0ms)
+Completed 200 OK in 12ms (Views: 5.4ms | ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/carriage/lists/1/subscribers" for 127.0.0.1 at 2026-07-09 23:02:24 +0200
+Processing by Carriage::SubscribersController#create as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "subscriber" => {"email" => "[FILTERED]", "first_name" => "Test3", "last_name" => "test", "custom_fields" => {"zipcode" => "4055", "city" => "Basel"}}, "commit" => "Add subscriber", "list_id" => "1"}
+  [1m[36mCarriage::List Load (0.5ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 1 LIMIT 1 /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mCarriage::Subscriber Load (0.2ms)[0m  [1m[34mSELECT "carriage_subscribers".* FROM "carriage_subscribers" WHERE "carriage_subscribers"."email" = 'test3@test.com' LIMIT 1 /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mCarriage::Subscriber Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_subscribers" WHERE LOWER("carriage_subscribers"."email") = LOWER('test3@test.com') LIMIT 1 /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mCarriage::Subscriber Create (0.1ms)[0m  [1m[32mINSERT INTO "carriage_subscribers" ("created_at", "email", "first_name", "last_name", "updated_at", "custom_fields") VALUES ('2026-07-09 21:02:24.822696', 'test3@test.com', 'Test3', 'test', '2026-07-09 21:02:24.822696', '{"zipcode":"4055","city":"Basel"}') RETURNING "id" /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mCarriage::Subscription Load (0.0ms)[0m  [1m[34mSELECT "carriage_subscriptions".* FROM "carriage_subscriptions" WHERE "carriage_subscriptions"."list_id" = 1 AND "carriage_subscriptions"."subscriber_id" = 5 LIMIT 1 /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mCarriage::Subscription Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_subscriptions" WHERE "carriage_subscriptions"."subscriber_id" = 5 AND "carriage_subscriptions"."list_id" = 1 LIMIT 1 /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mCarriage::Subscription Create (0.0ms)[0m  [1m[32mINSERT INTO "carriage_subscriptions" ("created_at", "list_id", "subscriber_id", "unsubscribed_at", "updated_at") VALUES ('2026-07-09 21:02:24.827464', 1, 5, NULL, '2026-07-09 21:02:24.827464') RETURNING "id" /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mMailkick::Subscription Load (0.0ms)[0m  [1m[34mSELECT "mailkick_subscriptions".* FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 5 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Carriage News' ORDER BY "mailkick_subscriptions"."id" ASC LIMIT 1 /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mMailkick::Subscription Create (0.1ms)[0m  [1m[32mINSERT INTO "mailkick_subscriptions" ("created_at", "list", "subscriber_id", "subscriber_type", "updated_at") VALUES ('2026-07-09 21:02:24.830812', 'Carriage News', 5, 'Carriage::Subscriber', '2026-07-09 21:02:24.830812') RETURNING "id" /*action='create',application='Dummy',controller='subscribers'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='Dummy',controller='subscribers'*/[0m
+Redirected to http://127.0.0.1:4444/carriage/lists/1
+Completed 302 Found in 37ms (ActiveRecord: 2.6ms (9 queries, 0 cached) | GC: 17.6ms)
+
+
+Started GET "/carriage/lists/1" for 127.0.0.1 at 2026-07-09 23:02:24 +0200
+Processing by Carriage::ListsController#show as HTML
+  Parameters: {"id" => "1"}
+  [1m[36mCarriage::List Load (0.1ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 1 LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mCarriage::Subscriber Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 1 AND "carriage_subscriptions"."unsubscribed_at" IS NULL /*action='show',application='Dummy',controller='lists'*/[0m
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/lists/show.html.erb within layouts/carriage/application
+  [1m[36mCarriage::Subscriber Load (0.1ms)[0m  [1m[34mSELECT "carriage_subscribers".* FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 1 ORDER BY "carriage_subscribers"."email" ASC LIMIT 20 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mMailkick::Subscription Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 2 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Carriage News' LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mMailkick::Subscription Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 5 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Carriage News' LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  [1m[36mMailkick::Subscription Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 1 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Carriage News' LIMIT 1 /*action='show',application='Dummy',controller='lists'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/lists/show.html.erb within layouts/carriage/application (Duration: 5.0ms | GC: 0.5ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 5.4ms | GC: 0.5ms)
+Completed 200 OK in 9ms (Views: 5.5ms | ActiveRecord: 0.3ms (6 queries, 0 cached) | GC: 1.2ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Dummy'*/[0m
+Migrating to CreateCarriageSegments (20260709210000)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Dummy'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "carriage_segments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "list_id" integer NOT NULL, "name" varchar NOT NULL, "match_type" varchar DEFAULT 'all' NOT NULL, "conditions" json DEFAULT '[]' NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_b9b7aa5c57"
+FOREIGN KEY ("list_id")
+  REFERENCES "carriage_lists" ("id")
+) /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_carriage_segments_on_list_id" ON "carriage_segments" ("list_id") /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_carriage_segments_on_list_and_name" ON "carriage_segments" ("list_id", "name") /*application='Dummy'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260709210000') RETURNING "version" /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Dummy'*/[0m
+Migrating to AddSegmentToCarriageCampaigns (20260709210001)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Dummy'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "carriage_campaigns" ADD "segment_id" integer /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_carriage_campaigns_on_segment_id" ON "carriage_campaigns" ("segment_id") /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "acarriage_campaigns" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "body_html" text, "created_at" datetime(6) NOT NULL, "cta_label" varchar, "cta_url" varchar, "footer_text" text, "heading" varchar, "list_id" integer NOT NULL, "name" varchar NOT NULL, "preheader" varchar, "scheduled_at" datetime(6), "sent_at" datetime(6), "status" varchar DEFAULT 'draft' NOT NULL, "subject" varchar NOT NULL, "updated_at" datetime(6) NOT NULL, "segment_id" integer) /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_acarriage_campaigns_on_segment_id" ON "acarriage_campaigns" ("segment_id") /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_acarriage_campaigns_on_status" ON "acarriage_campaigns" ("status") /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_acarriage_campaigns_on_scheduled_at" ON "acarriage_campaigns" ("scheduled_at") /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_acarriage_campaigns_on_list_id" ON "acarriage_campaigns" ("list_id") /*application='Dummy'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "acarriage_campaigns" ("id","body_html","created_at","cta_label","cta_url","footer_text","heading","list_id","name","preheader","scheduled_at","sent_at","status","subject","updated_at","segment_id")
+                     SELECT "id","body_html","created_at","cta_label","cta_url","footer_text","heading","list_id","name","preheader","scheduled_at","sent_at","status","subject","updated_at","segment_id" FROM "carriage_campaigns" /*application='Dummy'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "carriage_campaigns" /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "carriage_campaigns" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "body_html" text, "created_at" datetime(6) NOT NULL, "cta_label" varchar, "cta_url" varchar, "footer_text" text, "heading" varchar, "list_id" integer NOT NULL, "name" varchar NOT NULL, "preheader" varchar, "scheduled_at" datetime(6), "sent_at" datetime(6), "status" varchar DEFAULT 'draft' NOT NULL, "subject" varchar NOT NULL, "updated_at" datetime(6) NOT NULL, "segment_id" integer, CONSTRAINT "fk_rails_8fd5397d1e"
+FOREIGN KEY ("list_id")
+  REFERENCES "carriage_lists" ("id")
+, CONSTRAINT "fk_rails_d5cf29e155"
+FOREIGN KEY ("segment_id")
+  REFERENCES "carriage_segments" ("id")
+) /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_carriage_campaigns_on_list_id" ON "carriage_campaigns" ("list_id") /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_carriage_campaigns_on_scheduled_at" ON "carriage_campaigns" ("scheduled_at") /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_carriage_campaigns_on_status" ON "carriage_campaigns" ("status") /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_carriage_campaigns_on_segment_id" ON "carriage_campaigns" ("segment_id") /*application='Dummy'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "carriage_campaigns" ("id","body_html","created_at","cta_label","cta_url","footer_text","heading","list_id","name","preheader","scheduled_at","sent_at","status","subject","updated_at","segment_id")
+                     SELECT "id","body_html","created_at","cta_label","cta_url","footer_text","heading","list_id","name","preheader","scheduled_at","sent_at","status","subject","updated_at","segment_id" FROM "acarriage_campaigns" /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "acarriage_campaigns" /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='Dummy'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='Dummy'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260709210001') RETURNING "version" /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Dummy'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Dummy'*/[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/carriage/segments" for ::1 at 2026-07-09 23:15:28 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Dummy'*/[0m
+Processing by Carriage::SegmentsController#index as */*
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/segments/index.html.erb within layouts/carriage/application
+  [1m[36mCarriage::Segment Load (0.0ms)[0m  [1m[34mSELECT "carriage_segments".* FROM "carriage_segments" ORDER BY "carriage_segments"."name" ASC /*action='index',application='Dummy',controller='segments'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/segments/index.html.erb within layouts/carriage/application (Duration: 2.1ms | GC: 0.0ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 4.5ms | GC: 0.0ms)
+Completed 200 OK in 15ms (Views: 5.6ms | ActiveRecord: 0.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/carriage/lists/new" for ::1 at 2026-07-09 23:15:36 +0200
+Processing by Carriage::ListsController#new as */*
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/lists/new.html.erb within layouts/carriage/application
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/lists/_form.html.erb (Duration: 1.8ms | GC: 0.0ms)
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/lists/new.html.erb within layouts/carriage/application (Duration: 2.3ms | GC: 0.0ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 2.6ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 2.8ms | ActiveRecord: 0.3ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/carriage/lists" for ::1 at 2026-07-09 23:15:36 +0200
+Processing by Carriage::ListsController#create as */*
+  Parameters: {"authenticity_token" => "[FILTERED]", "list" => {"name" => "Newsletter", "fields_text" => "plan"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='Dummy',controller='lists'*/[0m
+  [1m[36mCarriage::List Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_lists" WHERE "carriage_lists"."name" = 'Newsletter' LIMIT 1 /*action='create',application='Dummy',controller='lists'*/[0m
+  [1m[36mCarriage::List Create (0.1ms)[0m  [1m[32mINSERT INTO "carriage_lists" ("created_at", "description", "name", "updated_at", "fields") VALUES ('2026-07-09 21:15:36.358183', NULL, 'Newsletter', '2026-07-09 21:15:36.358183', '[{"name":"plan","type":"string"}]') RETURNING "id" /*action='create',application='Dummy',controller='lists'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='Dummy',controller='lists'*/[0m
+Redirected to http://localhost:3099/carriage/lists/3
+Completed 302 Found in 5ms (ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mCarriage::List Load (0.0ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."name" = 'Newsletter' LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscriber Load (0.0ms)[0m  [1m[34mSELECT "carriage_subscribers".* FROM "carriage_subscribers" WHERE "carriage_subscribers"."email" = 'pro@example.com' LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscriber Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_subscribers" WHERE LOWER("carriage_subscribers"."email") = LOWER('pro@example.com') LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscriber Create (0.1ms)[0m  [1m[32mINSERT INTO "carriage_subscribers" ("created_at", "email", "first_name", "last_name", "updated_at", "custom_fields") VALUES ('2026-07-09 21:15:43.273782', 'pro@example.com', NULL, NULL, '2026-07-09 21:15:43.273782', '{"plan":"pro"}') RETURNING "id" /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscriber Load (0.3ms)[0m  [1m[34mSELECT "carriage_subscribers".* FROM "carriage_subscribers" WHERE "carriage_subscribers"."email" = 'free@example.com' LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscriber Exists? (2.7ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_subscribers" WHERE LOWER("carriage_subscribers"."email") = LOWER('free@example.com') LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscriber Create (0.0ms)[0m  [1m[32mINSERT INTO "carriage_subscribers" ("created_at", "email", "first_name", "last_name", "updated_at", "custom_fields") VALUES ('2026-07-09 21:15:43.283290', 'free@example.com', NULL, NULL, '2026-07-09 21:15:43.283290', '{"plan":"free"}') RETURNING "id" /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscription Load (0.0ms)[0m  [1m[34mSELECT "carriage_subscriptions".* FROM "carriage_subscriptions" WHERE "carriage_subscriptions"."list_id" = 3 AND "carriage_subscriptions"."subscriber_id" = 6 LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscription Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_subscriptions" WHERE "carriage_subscriptions"."subscriber_id" = 6 AND "carriage_subscriptions"."list_id" = 3 LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscription Create (0.0ms)[0m  [1m[32mINSERT INTO "carriage_subscriptions" ("created_at", "list_id", "subscriber_id", "unsubscribed_at", "updated_at") VALUES ('2026-07-09 21:15:43.290194', 3, 6, NULL, '2026-07-09 21:15:43.290194') RETURNING "id" /*application='Dummy'*/[0m
+  [1m[36mMailkick::Subscription Load (0.0ms)[0m  [1m[34mSELECT "mailkick_subscriptions".* FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 6 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Newsletter' ORDER BY "mailkick_subscriptions"."id" ASC LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mMailkick::Subscription Create (0.0ms)[0m  [1m[32mINSERT INTO "mailkick_subscriptions" ("created_at", "list", "subscriber_id", "subscriber_type", "updated_at") VALUES ('2026-07-09 21:15:43.294805', 'Newsletter', 6, 'Carriage::Subscriber', '2026-07-09 21:15:43.294805') RETURNING "id" /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscription Load (0.0ms)[0m  [1m[34mSELECT "carriage_subscriptions".* FROM "carriage_subscriptions" WHERE "carriage_subscriptions"."list_id" = 3 AND "carriage_subscriptions"."subscriber_id" = 7 LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscription Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_subscriptions" WHERE "carriage_subscriptions"."subscriber_id" = 7 AND "carriage_subscriptions"."list_id" = 3 LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mCarriage::Subscription Create (0.0ms)[0m  [1m[32mINSERT INTO "carriage_subscriptions" ("created_at", "list_id", "subscriber_id", "unsubscribed_at", "updated_at") VALUES ('2026-07-09 21:15:43.296729', 3, 7, NULL, '2026-07-09 21:15:43.296729') RETURNING "id" /*application='Dummy'*/[0m
+  [1m[36mMailkick::Subscription Load (0.0ms)[0m  [1m[34mSELECT "mailkick_subscriptions".* FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 7 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Newsletter' ORDER BY "mailkick_subscriptions"."id" ASC LIMIT 1 /*application='Dummy'*/[0m
+  [1m[36mMailkick::Subscription Create (0.0ms)[0m  [1m[32mINSERT INTO "mailkick_subscriptions" ("created_at", "list", "subscriber_id", "subscriber_type", "updated_at") VALUES ('2026-07-09 21:15:43.297634', 'Newsletter', 7, 'Carriage::Subscriber', '2026-07-09 21:15:43.297634') RETURNING "id" /*application='Dummy'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Dummy'*/[0m
+Started GET "/carriage/lists" for ::1 at 2026-07-09 23:15:48 +0200
+Processing by Carriage::ListsController#index as */*
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/lists/index.html.erb within layouts/carriage/application
+  [1m[36mCarriage::List Load (0.1ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" ORDER BY "carriage_lists"."name" ASC /*action='index',application='Dummy',controller='lists'*/[0m
+  [1m[36mCarriage::Subscriber Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 1 AND "carriage_subscriptions"."unsubscribed_at" IS NULL /*action='index',application='Dummy',controller='lists'*/[0m
+  [1m[36mCarriage::Subscriber Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 3 AND "carriage_subscriptions"."unsubscribed_at" IS NULL /*action='index',application='Dummy',controller='lists'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/lists/index.html.erb within layouts/carriage/application (Duration: 14.3ms | GC: 0.0ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 14.8ms | GC: 0.0ms)
+Completed 200 OK in 16ms (Views: 14.5ms | ActiveRecord: 0.5ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/carriage/segments/new" for ::1 at 2026-07-09 23:15:55 +0200
+Processing by Carriage::SegmentsController#new as */*
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/segments/new.html.erb within layouts/carriage/application
+  [1m[36mCarriage::List Load (0.1ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" ORDER BY "carriage_lists"."name" ASC /*action='new',application='Dummy',controller='segments'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/segments/_form.html.erb (Duration: 3.6ms | GC: 0.0ms)
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/segments/new.html.erb within layouts/carriage/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 4.6ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 4.8ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/carriage/segments" for ::1 at 2026-07-09 23:15:55 +0200
+Processing by Carriage::SegmentsController#create as */*
+  Parameters: {"authenticity_token" => "[FILTERED]", "segment" => {"list_id" => "3", "name" => "Pro plan", "match_type" => "all", "conditions_text" => "plan equals pro"}}
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='Dummy',controller='segments'*/[0m
+  [1m[36mCarriage::List Load (0.6ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 3 LIMIT 1 /*action='create',application='Dummy',controller='segments'*/[0m
+  [1m[36mCarriage::Segment Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "carriage_segments" WHERE "carriage_segments"."name" = 'Pro plan' AND "carriage_segments"."list_id" = 3 LIMIT 1 /*action='create',application='Dummy',controller='segments'*/[0m
+  [1m[36mCarriage::Segment Create (0.1ms)[0m  [1m[32mINSERT INTO "carriage_segments" ("list_id", "name", "match_type", "conditions", "created_at", "updated_at") VALUES (3, 'Pro plan', 'all', '[{"field":"plan","operator":"equals","value":"pro"}]', '2026-07-09 21:15:55.099723', '2026-07-09 21:15:55.099723') RETURNING "id" /*action='create',application='Dummy',controller='segments'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='Dummy',controller='segments'*/[0m
+Redirected to http://localhost:3099/carriage/segments/1
+Completed 302 Found in 5ms (ActiveRecord: 0.8ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/carriage/segments/1" for ::1 at 2026-07-09 23:16:00 +0200
+Processing by Carriage::SegmentsController#show as */*
+  Parameters: {"id" => "1"}
+  [1m[36mCarriage::Segment Load (0.1ms)[0m  [1m[34mSELECT "carriage_segments".* FROM "carriage_segments" WHERE "carriage_segments"."id" = 1 LIMIT 1 /*action='show',application='Dummy',controller='segments'*/[0m
+  [1m[36mCarriage::List Load (0.0ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" WHERE "carriage_lists"."id" = 3 LIMIT 1 /*action='show',application='Dummy',controller='segments'*/[0m
+  [1m[36mCarriage::Subscriber Pluck (0.1ms)[0m  [1m[34mSELECT "carriage_subscribers"."id" FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 3 AND (json_extract(carriage_subscribers.custom_fields, '$.plan') = 'pro') /*action='show',application='Dummy',controller='segments'*/[0m
+  [1m[36mCACHE Carriage::Subscriber Pluck (0.0ms)[0m  [1m[34mSELECT "carriage_subscribers"."id" FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 3 AND (json_extract(carriage_subscribers.custom_fields, '$.plan') = 'pro')[0m
+  [1m[36mCarriage::Subscriber Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 3 AND "carriage_subscribers"."id" = 6 AND "carriage_subscriptions"."unsubscribed_at" IS NULL /*action='show',application='Dummy',controller='segments'*/[0m
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/segments/show.html.erb within layouts/carriage/application
+  [1m[36mCarriage::Subscriber Load (0.1ms)[0m  [1m[34mSELECT "carriage_subscribers".* FROM "carriage_subscribers" INNER JOIN "carriage_subscriptions" ON "carriage_subscribers"."id" = "carriage_subscriptions"."subscriber_id" WHERE "carriage_subscriptions"."list_id" = 3 AND "carriage_subscribers"."id" = 6 ORDER BY "carriage_subscribers"."email" ASC LIMIT 20 /*action='show',application='Dummy',controller='segments'*/[0m
+  [1m[36mMailkick::Subscription Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "mailkick_subscriptions" WHERE "mailkick_subscriptions"."subscriber_id" = 6 AND "mailkick_subscriptions"."subscriber_type" = 'Carriage::Subscriber' AND "mailkick_subscriptions"."list" = 'Newsletter' LIMIT 1 /*action='show',application='Dummy',controller='segments'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/segments/show.html.erb within layouts/carriage/application (Duration: 15.2ms | GC: 11.1ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 15.8ms | GC: 11.1ms)
+Completed 200 OK in 22ms (Views: 15.9ms | ActiveRecord: 0.5ms (7 queries, 1 cached) | GC: 11.1ms)
+
+
+Started GET "/carriage/campaigns/new?campaign%5Blist_id%5D=3" for ::1 at 2026-07-09 23:16:05 +0200
+Processing by Carriage::CampaignsController#new as */*
+  Parameters: {"campaign" => {"list_id" => "3"}}
+  Rendering layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb
+  Rendering /Users/stefan/code/playground/carriage/app/views/carriage/campaigns/new.html.erb within layouts/carriage/application
+  [1m[36mCarriage::List Load (0.4ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" ORDER BY "carriage_lists"."name" ASC /*action='new',application='Dummy',controller='campaigns'*/[0m
+  [1m[36mCACHE Carriage::List Load (0.0ms)[0m  [1m[34mSELECT "carriage_lists".* FROM "carriage_lists" ORDER BY "carriage_lists"."name" ASC[0m
+  [1m[36mCarriage::Segment Load (0.1ms)[0m  [1m[34mSELECT "carriage_segments".* FROM "carriage_segments" WHERE "carriage_segments"."list_id" IN (1, 3) /*action='new',application='Dummy',controller='campaigns'*/[0m
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/campaigns/_form.html.erb (Duration: 7.1ms | GC: 0.7ms)
+  Rendered /Users/stefan/code/playground/carriage/app/views/carriage/campaigns/new.html.erb within layouts/carriage/application (Duration: 7.5ms | GC: 0.7ms)
+  Rendered layout /Users/stefan/code/playground/carriage/app/views/layouts/carriage/application.html.erb (Duration: 7.7ms | GC: 0.7ms)
+Completed 200 OK in 14ms (Views: 7.5ms | ActiveRecord: 0.7ms (3 queries, 1 cached) | GC: 1.7ms)
+
+

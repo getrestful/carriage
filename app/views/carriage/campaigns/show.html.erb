@@ -4,6 +4,9 @@
 </div>
 <p class="mb-6 text-sm text-gray-500">
   List: <%= link_to @campaign.list.name, list_path(@campaign.list), class: "font-medium text-indigo-600 hover:text-indigo-700" %>
+  <% if @campaign.segment %>
+    &middot; Segment: <%= link_to @campaign.segment.name, segment_path(@campaign.segment), class: "font-medium text-indigo-600 hover:text-indigo-700" %>
+  <% end %>
 </p>
 
 <div class="mb-8 flex gap-3">

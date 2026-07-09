@@ -14,6 +14,12 @@
     <%= f.collection_select :list_id, Carriage::List.order(:name), :id, :name, { prompt: true }, class: input_classes %>
   </div>
 
+  <div>
+    <%= f.label :segment_id, "Segment", class: label_classes %>
+    <p class="mt-1 text-sm text-gray-500">Leave blank to send to all active subscribers on the list.</p>
+    <%= f.grouped_collection_select :segment_id, Carriage::List.includes(:segments).order(:name), :segments, :name, :id, :name, { include_blank: "All active subscribers" }, class: input_classes %>
+  </div>
+
   <div class="grid gap-5 sm:grid-cols-2">
     <div>
       <%= f.label :name, "Internal name", class: label_classes %>

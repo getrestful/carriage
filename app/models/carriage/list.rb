@@ -5,6 +5,7 @@ module Carriage
     has_many :subscriptions, class_name: "Carriage::Subscription", dependent: :destroy
     has_many :subscribers, through: :subscriptions, class_name: "Carriage::Subscriber"
     has_many :campaigns, class_name: "Carriage::Campaign", dependent: :destroy
+    has_many :segments, class_name: "Carriage::Segment", dependent: :destroy
 
     validates :name, presence: true, uniqueness: true
     validate :fields_are_valid

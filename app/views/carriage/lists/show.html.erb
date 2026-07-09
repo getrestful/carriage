@@ -9,6 +9,7 @@
   <%= link_to "Edit list", edit_list_path(@list), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
   <%= link_to "Import CSV", new_list_csv_import_path(@list), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
   <%= link_to "Export CSV", export_list_path(@list), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+  <%= link_to "New segment", new_segment_path(list_id: @list.id), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
   <%= link_to "New campaign", new_campaign_path(campaign: { list_id: @list.id }), class: "inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500" %>
 </div>
 

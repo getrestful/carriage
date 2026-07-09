@@ -8,7 +8,7 @@ module Carriage
 
       campaign.update!(status: :sending)
 
-      campaign.list.active_subscribers.find_each do |subscriber|
+      campaign.recipients.find_each do |subscriber|
         delivery = Carriage::Delivery.find_or_create_by!(campaign: campaign, subscriber: subscriber)
         Carriage::DeliverSubscriberJob.perform_later(delivery.id)
       end

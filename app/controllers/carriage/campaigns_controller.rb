@@ -11,7 +11,7 @@ module Carriage
     end
 
     def new
-      @campaign = Carriage::Campaign.new(list_id: params.dig(:campaign, :list_id))
+      @campaign = Carriage::Campaign.new(list_id: params.dig(:campaign, :list_id), segment_id: params.dig(:campaign, :segment_id))
     end
 
     def create
@@ -85,7 +85,7 @@ module Carriage
     end
 
     def campaign_params
-      params.require(:campaign).permit(:list_id, :name, :subject, :preheader, :heading, :body_html, :cta_label, :cta_url, :footer_text)
+      params.require(:campaign).permit(:list_id, :segment_id, :name, :subject, :preheader, :heading, :body_html, :cta_label, :cta_url, :footer_text)
     end
   end
 end

@@ -11,6 +11,8 @@ Carriage::Engine.routes.draw do
     get :export, on: :member
   end
 
+  resources :segments
+
   resources :campaigns do
     member do
       get :preview
