@@ -1,0 +1,42 @@
+<mjml>
+  <mj-head>
+    <mj-preview><%= @campaign.preheader %></mj-preview>
+    <mj-attributes>
+      <mj-all font-family="Helvetica, Arial, sans-serif" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#f4f4f4">
+    <mj-section background-color="#ffffff" padding="24px">
+      <mj-column>
+        <% if @campaign.heading.present? %>
+          <mj-text font-size="24px" font-weight="bold" padding-bottom="8px">
+            <%= @campaign.heading %>
+          </mj-text>
+        <% end %>
+
+        <mj-text font-size="15px" line-height="1.5">
+          <%= raw @campaign.body_html %>
+        </mj-text>
+
+        <% if @campaign.cta_label.present? && @campaign.cta_url.present? %>
+          <mj-button href="<%= @campaign.cta_url %>" background-color="#4c6ef5" padding-top="16px">
+            <%= @campaign.cta_label %>
+          </mj-button>
+        <% end %>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="16px">
+      <mj-column>
+        <% if @campaign.footer_text.present? %>
+          <mj-text font-size="12px" color="#888888" align="center">
+            <%= @campaign.footer_text %>
+          </mj-text>
+        <% end %>
+        <mj-text font-size="12px" color="#888888" align="center">
+          <a href="<%= unsubscribe_url(token: @delivery.token, **Carriage::ApplicationMailer.default_url_options) %>" data-skip-tracking>Unsubscribe</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

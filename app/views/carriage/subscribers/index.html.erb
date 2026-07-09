@@ -1,0 +1,22 @@
+<h1 class="mb-6 text-2xl font-semibold tracking-tight text-gray-900"><%= @list.name %> subscribers</h1>
+
+<div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+  <table class="min-w-full divide-y divide-gray-100">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Email</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Name</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Status</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-100">
+      <% @subscribers.each do |subscriber| %>
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= subscriber.email %></td>
+          <td class="px-6 py-4 text-sm text-gray-500"><%= [ subscriber.first_name, subscriber.last_name ].compact.join(" ") %></td>
+          <td class="px-6 py-4 text-sm text-gray-500"><%= subscriber.subscribed?(@list.name) ? "Subscribed" : "Unsubscribed" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

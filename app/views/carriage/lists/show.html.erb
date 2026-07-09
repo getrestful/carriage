@@ -1,0 +1,55 @@
+<div class="mb-2 flex items-start justify-between">
+  <div>
+    <h1 class="text-2xl font-semibold tracking-tight text-gray-900"><%= @list.name %></h1>
+    <p class="mt-1 text-sm text-gray-500"><%= @list.description %></p>
+  </div>
+</div>
+
+<div class="mb-8 flex gap-3">
+  <%= link_to "Edit list", edit_list_path(@list), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+  <%= link_to "Import CSV", new_list_csv_import_path(@list), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+  <%= link_to "Export CSV", export_list_path(@list), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+  <%= link_to "New campaign", new_campaign_path(campaign: { list_id: @list.id }), class: "inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500" %>
+</div>
+
+<div class="mb-4 flex items-center justify-between">
+  <h2 class="text-base font-semibold text-gray-900">Subscribers <span class="font-normal text-gray-500">(<%= @subscriber_count %> active)</span></h2>
+  <%= link_to "Add subscriber", new_list_subscriber_path(@list), class: "text-sm font-medium text-indigo-600 hover:text-indigo-700" %>
+</div>
+
+<div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+  <table class="min-w-full divide-y divide-gray-100">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Email</th>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Name</th>
+        <% @list.field_names.each do |field_name| %>
+          <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"><%= field_name %></th>
+        <% end %>
+        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Status</th>
+        <th class="px-6 py-3"></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-100">
+      <% @subscribers.each do |subscriber| %>
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= subscriber.email %></td>
+          <td class="px-6 py-4 text-sm text-gray-500"><%= [ subscriber.first_name, subscriber.last_name ].compact.join(" ") %></td>
+          <% @list.field_names.each do |field_name| %>
+            <td class="px-6 py-4 text-sm text-gray-500"><%= subscriber.custom_fields[field_name] %></td>
+          <% end %>
+          <td class="px-6 py-4 text-sm">
+            <% if subscriber.subscribed?(@list.name) %>
+              <span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">Subscribed</span>
+            <% else %>
+              <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">Unsubscribed</span>
+            <% end %>
+          </td>
+          <td class="px-6 py-4 text-right text-sm">
+            <%= button_to "Remove", list_subscriber_path(@list, subscriber), method: :delete, data: { turbo_confirm: "Remove this subscriber from the list?" }, class: "font-medium text-red-600 hover:text-red-700" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

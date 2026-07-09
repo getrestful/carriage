@@ -1,0 +1,33 @@
+<h1 class="mb-6 text-2xl font-semibold tracking-tight text-gray-900">Add subscriber to <%= @list.name %></h1>
+
+<%= form_with model: @subscriber, url: list_subscribers_path(@list), class: "max-w-lg space-y-5" do |f| %>
+  <% if @subscriber.errors.any? %>
+    <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+      <%= @subscriber.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.email_field :email, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+  </div>
+
+  <div>
+    <%= f.label :first_name, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :first_name, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+  </div>
+
+  <div>
+    <%= f.label :last_name, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :last_name, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+  </div>
+
+  <% @list.field_names.each do |field_name| %>
+    <div>
+      <%= label_tag "subscriber_custom_fields_#{field_name}", field_name, class: "block text-sm font-medium text-gray-700" %>
+      <%= text_field_tag "subscriber[custom_fields][#{field_name}]", @subscriber.custom_fields[field_name], id: "subscriber_custom_fields_#{field_name}", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+    </div>
+  <% end %>
+
+  <%= f.submit "Add subscriber", class: "inline-flex cursor-pointer items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500" %>
+<% end %>

@@ -1,0 +1,60 @@
+<%
+  input_classes = "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+  label_classes = "block text-sm font-medium text-gray-700"
+%>
+<%= form_with model: campaign, url: (campaign.persisted? ? campaign_path(campaign) : campaigns_path), class: "max-w-2xl space-y-5" do |f| %>
+  <% if campaign.errors.any? %>
+    <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+      <%= campaign.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :list_id, "List", class: label_classes %>
+    <%= f.collection_select :list_id, Carriage::List.order(:name), :id, :name, { prompt: true }, class: input_classes %>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <%= f.label :name, "Internal name", class: label_classes %>
+      <%= f.text_field :name, class: input_classes %>
+    </div>
+    <div>
+      <%= f.label :subject, "Email subject", class: label_classes %>
+      <%= f.text_field :subject, class: input_classes %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :preheader, class: label_classes %>
+    <%= f.text_field :preheader, class: input_classes %>
+  </div>
+
+  <div>
+    <%= f.label :heading, class: label_classes %>
+    <%= f.text_field :heading, class: input_classes %>
+  </div>
+
+  <div>
+    <%= f.label :body_html, "Body (HTML)", class: label_classes %>
+    <%= f.text_area :body_html, rows: 6, class: "#{input_classes} font-mono" %>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <%= f.label :cta_label, "Button label", class: label_classes %>
+      <%= f.text_field :cta_label, class: input_classes %>
+    </div>
+    <div>
+      <%= f.label :cta_url, "Button URL", class: label_classes %>
+      <%= f.url_field :cta_url, class: input_classes %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :footer_text, class: label_classes %>
+    <%= f.text_area :footer_text, rows: 2, class: input_classes %>
+  </div>
+
+  <%= f.submit campaign.persisted? ? "Update campaign" : "Create campaign", class: "inline-flex cursor-pointer items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500" %>
+<% end %>

@@ -1,0 +1,46 @@
+<div class="mb-8 flex items-center justify-between">
+  <h1 class="text-2xl font-semibold tracking-tight text-gray-900">Carriage</h1>
+</div>
+
+<div class="grid gap-6 md:grid-cols-2">
+  <section class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-base font-semibold text-gray-900">Lists</h2>
+      <%= link_to "New list", new_list_path, class: "text-sm font-medium text-indigo-600 hover:text-indigo-700" %>
+    </div>
+    <% if @lists.any? %>
+      <ul class="divide-y divide-gray-100">
+        <% @lists.each do |list| %>
+          <li class="flex items-center justify-between py-3">
+            <%= link_to list.name, list_path(list), class: "text-sm font-medium text-gray-900 hover:text-indigo-600" %>
+            <span class="text-sm text-gray-500"><%= list.active_subscribers.count %> subscribers</span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-sm text-gray-500">No lists yet. <%= link_to "Create one", new_list_path, class: "font-medium text-indigo-600 hover:text-indigo-700" %>.</p>
+    <% end %>
+  </section>
+
+  <section class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-base font-semibold text-gray-900">Recent campaigns</h2>
+      <%= link_to "New campaign", new_campaign_path, class: "text-sm font-medium text-indigo-600 hover:text-indigo-700" %>
+    </div>
+    <% if @recent_campaigns.any? %>
+      <ul class="divide-y divide-gray-100">
+        <% @recent_campaigns.each do |campaign| %>
+          <li class="flex items-center justify-between py-3">
+            <div>
+              <%= link_to campaign.name, campaign_path(campaign), class: "block text-sm font-medium text-gray-900 hover:text-indigo-600" %>
+              <span class="text-xs text-gray-500"><%= campaign.list.name %></span>
+            </div>
+            <%= render "carriage/shared/status_badge", status: campaign.status %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-sm text-gray-500">No campaigns yet. <%= link_to "Create one", new_campaign_path, class: "font-medium text-indigo-600 hover:text-indigo-700" %>.</p>
+    <% end %>
+  </section>
+</div>

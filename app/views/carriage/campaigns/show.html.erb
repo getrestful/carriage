@@ -1,0 +1,65 @@
+<div class="mb-2 flex items-center gap-3">
+  <h1 class="text-2xl font-semibold tracking-tight text-gray-900"><%= @campaign.name %></h1>
+  <%= render "carriage/shared/status_badge", status: @campaign.status %>
+</div>
+<p class="mb-6 text-sm text-gray-500">
+  List: <%= link_to @campaign.list.name, list_path(@campaign.list), class: "font-medium text-indigo-600 hover:text-indigo-700" %>
+</p>
+
+<div class="mb-8 flex gap-3">
+  <%= link_to "Edit", edit_campaign_path(@campaign), class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+  <%= link_to "Preview", preview_campaign_path(@campaign), target: "_blank", rel: "noopener", class: "inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+  <%= button_to "Duplicate", duplicate_campaign_path(@campaign), method: :post, class: "inline-flex cursor-pointer items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+</div>
+
+<h2 class="mb-3 text-base font-semibold text-gray-900">Stats</h2>
+<div class="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+  <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <span class="block text-2xl font-semibold text-gray-900"><%= @stats.sent_count %></span>
+    <span class="text-sm text-gray-500">Sent</span>
+  </div>
+  <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <span class="block text-2xl font-semibold text-gray-900"><%= @stats.opens_count %></span>
+    <span class="text-sm text-gray-500">Opens (<%= @stats.open_rate %>%)</span>
+  </div>
+  <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <span class="block text-2xl font-semibold text-gray-900"><%= @stats.clicked_deliveries_count %></span>
+    <span class="text-sm text-gray-500">Clicked (<%= @stats.click_through_rate %>% CTR)</span>
+  </div>
+  <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <span class="block text-2xl font-semibold text-gray-900"><%= @stats.total_clicks_count %></span>
+    <span class="text-sm text-gray-500">Total clicks</span>
+  </div>
+</div>
+
+<div class="grid gap-6 md:grid-cols-2">
+  <section class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <h2 class="mb-4 text-base font-semibold text-gray-900">Send a test email</h2>
+    <%= form_with url: send_test_campaign_path(@campaign), method: :post, class: "space-y-4" do |f| %>
+      <div>
+        <%= f.label :test_email, "Send test to", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.email_field :test_email, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+      </div>
+      <%= f.submit "Send test", class: "inline-flex cursor-pointer items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+    <% end %>
+  </section>
+
+  <section class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <h2 class="mb-4 text-base font-semibold text-gray-900">Schedule</h2>
+    <% if @campaign.draft? || @campaign.scheduled? %>
+      <%= form_with url: schedule_campaign_path(@campaign), method: :post, class: "space-y-4" do |f| %>
+        <div>
+          <%= f.label :scheduled_at, "Send at", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.datetime_field :scheduled_at, value: @campaign.scheduled_at&.strftime("%Y-%m-%dT%H:%M"), class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+        </div>
+        <%= f.submit "Schedule", class: "inline-flex cursor-pointer items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
+      <% end %>
+
+      <div class="mt-4 border-t border-gray-100 pt-4">
+        <%= button_to "Send now", send_now_campaign_path(@campaign), method: :post, data: { turbo_confirm: "Send this campaign to all active subscribers now?" }, class: "inline-flex cursor-pointer items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500" %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500">This campaign has already been sent.</p>
+    <% end %>
+  </section>
+</div>

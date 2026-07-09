@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Carriage</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= yield :head %>
+
+  <%= stylesheet_link_tag    "carriage/application", media: "all" %>
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-900 antialiased">
+  <header class="border-b border-gray-200 bg-white">
+    <div class="mx-auto flex max-w-5xl items-center gap-8 px-6 py-4">
+      <%= link_to root_path, class: "flex items-center gap-2 font-semibold text-gray-900" do %>
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-md bg-indigo-600 text-sm font-bold text-white">C</span>
+        Carriage
+      <% end %>
+      <nav class="flex gap-6 text-sm font-medium text-gray-600">
+        <%= link_to "Lists", lists_path, class: "hover:text-indigo-600" %>
+        <%= link_to "Campaigns", campaigns_path, class: "hover:text-indigo-600" %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-6 py-8">
+    <% flash.each do |type, message| %>
+      <div class="mb-6 rounded-lg border px-4 py-3 text-sm <%= type.to_s == "alert" ? "border-red-200 bg-red-50 text-red-700" : "border-emerald-200 bg-emerald-50 text-emerald-700" %>">
+        <%= message %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </main>
+</body>
+</html>
