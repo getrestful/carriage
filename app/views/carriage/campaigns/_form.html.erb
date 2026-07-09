@@ -42,8 +42,8 @@
   </div>
 
   <div>
-    <%= f.label :body_html, "Body (HTML)", class: label_classes %>
-    <%= f.text_area :body_html, rows: 6, class: "#{input_classes} font-mono" %>
+    <%= f.label :body_html, "Body", class: label_classes %>
+    <%= f.rich_text_area :body_html %>
   </div>
 
   <div class="grid gap-5 sm:grid-cols-2">

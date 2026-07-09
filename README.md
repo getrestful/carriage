@@ -78,6 +78,70 @@ is the durable source of truth for opt-out (mailkick itself has no persistent
 opt-out state — its "unsubscribe" is a hard delete, which would otherwise let
 a re-import silently resubscribe someone).
 
+## Rich text campaign body
+
+The campaign body field uses Action Text (Trix) instead of a plain textarea,
+so editors get bold/links/lists/images without a drag-and-drop block builder.
+This has host-app implications worth knowing about, since Action Text and
+Active Storage are **not** isolated the way Carriage's own tables are —
+`Carriage::Campaign#body_html` is backed by `action_text_rich_texts` and
+`active_storage_*` tables that live in your host app's database and aren't
+shipped by `carriage:install:migrations`.
+
+Host app setup (one-time, in addition to the "Installation" steps above):
+
+```bash
+bin/rails action_text:install   # copies action_text/active_storage migrations,
+                                 # config/storage.yml, and JS/CSS wiring
+bin/rails active_storage:install  # only needed if action_text:install didn't run it
+bin/rails db:migrate
+```
+
+Also add `image_processing` to your host app's Gemfile (Carriage depends on
+it for rendering the thumbnail previews Action Text embeds for uploaded
+images) and make sure a processor is available at runtime — either
+[libvips](https://www.libvips.org/) or ImageMagick.
+
+Two host-app config points that are easy to miss:
+
+- **Set `Rails.application.routes.default_url_options[:host]`, not just
+  `config.action_mailer.default_url_options`.** Action Text renders embedded
+  images as `<img>` tags via Active Storage's own URL helpers, which read
+  from the router's `default_url_options`, not ActionMailer's. Set both to
+  the same host or campaign emails will render with broken image links
+  (silently falling back to a bogus `http://example.org` host) even though
+  the CTA/unsubscribe links work fine.
+- **Don't set a short `config.active_storage.urls_expire_in`.** Campaign
+  emails can sit in an inbox for weeks before being opened; a short expiry on
+  the embedded image URLs will break images in mail that's already been
+  sent. Leave it at its default (no expiry). Consider
+  `config.active_storage.resolve_model_to_route = :rails_storage_proxy`
+  (serves image bytes through your app instead of redirecting to the
+  storage service) if you'd rather not expose signed cloud-storage URLs
+  directly in outgoing email.
+
+Carriage's own layout (`app/views/layouts/carriage/application.html.erb`)
+ships the Trix/Action Text JS and CSS tags directly, so no host-app asset
+config is needed to get the editor UI working in `/carriage`. Action Text's
+default attachment-rendering views (used both for the editor and for
+`body_html.to_s` in the mailer) are left untouched — Carriage doesn't
+override them, so they always match whatever `actiontext` gem version the
+host app resolves to.
+
+**`isolate_namespace` + Action Text's attachment rendering needs a workaround.**
+Action Text installs an `around_action` (on both controllers and mailers)
+that points `ActionText::Content.renderer` at whatever controller/mailer is
+currently handling the request — but Carriage is `isolate_namespace`d, so
+inside `Carriage::CampaignMailer` and `Carriage::CampaignsController#preview`
+that renderer is Carriage's own isolated route set, which has no knowledge of
+Active Storage's routes. Left alone, embedded images in `body_html` would
+fail to resolve to a URL (`undefined method 'to_model' for an instance of
+ActiveStorage::VariantWithRecord`) whenever a campaign is previewed or
+actually sent — but render fine anywhere else, which makes it easy to miss
+in ad-hoc testing. `Carriage::ActionTextRenderer` (a plain, non-isolated
+`ActionController::Base` renderer) is used to wrap both render calls so
+attachment URLs resolve against the host app's main route set instead.
+
 ## MJML rendering
 
 Templates are compiled via [mjml-rb](https://github.com/awarwick/mjml-rb), a

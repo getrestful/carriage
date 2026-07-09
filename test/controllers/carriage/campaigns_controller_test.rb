@@ -59,7 +59,7 @@ module Carriage
       assert_redirected_to "/carriage/campaigns/#{copy.id}/edit"
       assert_equal "Launch (Copy)", copy.name
       assert_equal @campaign.subject, copy.subject
-      assert_equal @campaign.body_html, copy.body_html
+      assert_equal @campaign.body_html.to_s, copy.body_html.to_s
       assert copy.draft?
     end
   end

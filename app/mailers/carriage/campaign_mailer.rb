@@ -5,7 +5,9 @@ module Carriage
       @campaign = delivery.campaign
       @subscriber = delivery.subscriber
 
-      mjml_source = render_to_string(template: "carriage/campaign_mailer/campaign", formats: [ :mjml ], layout: false)
+      mjml_source = ActionText::Content.with_renderer(Carriage::ActionTextRenderer.renderer) do
+        render_to_string(template: "carriage/campaign_mailer/campaign", formats: [ :mjml ], layout: false)
+      end
       html_body = Carriage::MjmlRenderer.render(mjml_source)
       html_body = Carriage::EmailTracking.instrument(html_body, @delivery)
 

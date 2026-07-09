@@ -1,4 +1,5 @@
 require "test_helper"
+require "csv"
 
 module Carriage
   class CsvExportTest < ActiveSupport::TestCase

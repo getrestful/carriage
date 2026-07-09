@@ -3,6 +3,7 @@ module Carriage
     belongs_to :list, class_name: "Carriage::List"
     belongs_to :segment, class_name: "Carriage::Segment", optional: true
     has_many :deliveries, class_name: "Carriage::Delivery", dependent: :destroy
+    has_rich_text :body_html
 
     enum :status, { draft: "draft", scheduled: "scheduled", sending: "sending", sent: "sent" }, default: "draft"
 
@@ -21,7 +22,7 @@ module Carriage
     def duplicate
       Carriage::Campaign.create!(
         list_id: list_id, segment_id: segment_id, name: "#{name} (Copy)", subject: subject, preheader: preheader,
-        heading: heading, body_html: body_html, cta_label: cta_label, cta_url: cta_url, footer_text: footer_text
+        heading: heading, body_html: body_html.body, cta_label: cta_label, cta_url: cta_url, footer_text: footer_text
       )
     end
 

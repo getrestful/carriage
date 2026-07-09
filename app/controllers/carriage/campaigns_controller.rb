@@ -41,10 +41,12 @@ module Carriage
 
     def preview
       delivery = Carriage::Delivery.new(campaign: @campaign, subscriber: Carriage::Subscriber.new(email: "preview@example.com"), token: "preview")
-      mjml_source = render_to_string(
-        template: "carriage/campaign_mailer/campaign", formats: [ :mjml ], layout: false,
-        assigns: { campaign: @campaign, delivery: delivery }
-      )
+      mjml_source = ActionText::Content.with_renderer(Carriage::ActionTextRenderer.renderer) do
+        render_to_string(
+          template: "carriage/campaign_mailer/campaign", formats: [ :mjml ], layout: false,
+          assigns: { campaign: @campaign, delivery: delivery }
+        )
+      end
       render html: Carriage::MjmlRenderer.render(mjml_source).html_safe
     end
 
