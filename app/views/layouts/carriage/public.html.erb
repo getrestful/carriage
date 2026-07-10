@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Carriage</title>
+
+  <%= yield :head %>
+
+  <%= stylesheet_link_tag "carriage/application", media: "all" %>
+</head>
+<body class="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900 antialiased">
+  <%= yield %>
+</body>
+</html>

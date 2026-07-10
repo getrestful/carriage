@@ -1,5 +1,6 @@
 <%
   input_classes = "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+  select_classes = "block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 pr-9 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
   label_classes = "block text-sm font-medium text-gray-700"
 %>
 <%= form_with model: segment, url: (segment.persisted? ? segment_path(segment) : segments_path), class: "max-w-lg space-y-5" do |f| %>
@@ -15,7 +16,10 @@
       <p class="mt-1 text-sm text-gray-900"><%= segment.list.name %></p>
       <%= f.hidden_field :list_id %>
     <% else %>
-      <%= f.collection_select :list_id, Carriage::List.order(:name), :id, :name, { prompt: true }, class: input_classes %>
+      <div class="relative mt-1">
+        <%= f.collection_select :list_id, Carriage::List.order(:name), :id, :name, { prompt: true }, class: select_classes %>
+        <%= lucide_icon "chevron-down", size: 16, class: "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" %>
+      </div>
     <% end %>
   </div>
 
@@ -26,7 +30,10 @@
 
   <div>
     <%= f.label :match_type, "Match", class: label_classes %>
-    <%= f.select :match_type, [ [ "All conditions (AND)", "all" ], [ "Any condition (OR)", "any" ] ], {}, class: input_classes %>
+    <div class="relative mt-1">
+      <%= f.select :match_type, [ [ "All conditions (AND)", "all" ], [ "Any condition (OR)", "any" ] ], {}, class: select_classes %>
+      <%= lucide_icon "chevron-down", size: 16, class: "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" %>
+    </div>
   </div>
 
   <div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_09_220000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -130,6 +130,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_09_220000) do
   end
 
   create_table "carriage_subscriptions", force: :cascade do |t|
+    t.datetime "confirmed_at"
     t.datetime "created_at", null: false
     t.integer "list_id", null: false
     t.integer "subscriber_id", null: false

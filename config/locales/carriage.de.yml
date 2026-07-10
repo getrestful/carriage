@@ -1,0 +1,36 @@
+de:
+  carriage:
+    public:
+      unsubscribes:
+        show:
+          unsubscribed_heading: "Du wurdest abgemeldet"
+          unsubscribed_message: "Du erhältst keine weiteren E-Mails mehr von dieser Liste."
+          invalid_heading: "Link nicht mehr gültig"
+          invalid_message: "Dieser Abmeldelink ist nicht mehr gültig."
+          homepage_link: "Zur Startseite"
+      signups:
+        new:
+          heading: "%{list} abonnieren"
+          email_label: "E-Mail"
+          first_name_label: "Vorname"
+          last_name_label: "Nachname"
+          submit: "Abonnieren"
+        pending:
+          heading: "Fast geschafft"
+          message: "Wir haben einen Bestätigungslink an %{email} gesendet. Klicke darauf, um E-Mails zu erhalten."
+      confirmations:
+        show:
+          confirmed_heading: "Abonnement bestätigt"
+          confirmed_message: "Du hast %{list} erfolgreich abonniert."
+          invalid_heading: "Link nicht mehr gültig"
+          invalid_message: "Dieser Bestätigungslink ist nicht mehr gültig."
+          homepage_link: "Zur Startseite"
+    campaign_mailer:
+      campaign:
+        unsubscribe_link_text: "Abmelden"
+    confirmation_mailer:
+      confirm_email:
+        subject: "Bitte bestätige dein Abonnement für %{list}"
+        body: "Bitte bestätige, dass du E-Mails von %{list} erhalten möchtest."
+        confirm_button: "Abonnement bestätigen"
+        ignore_notice: "Falls du das nicht angefordert hast, kannst du diese E-Mail ignorieren."

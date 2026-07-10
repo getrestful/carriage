@@ -48,7 +48,7 @@ module Carriage
     end
 
     def url_helpers
-      Carriage::Engine.routes.url_helpers
+      Carriage::Public::Engine.routes.url_helpers
     end
 
     def url_options

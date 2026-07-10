@@ -1,0 +1,200 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "home", media: "all" %>
+<% end %>
+
+<div class="home">
+  <nav class="nav">
+    <div class="wrap">
+      <div class="brand">
+        <%= image_tag "/icon.svg", alt: "" %>
+        Carriage
+      </div>
+      <%= link_to carriage.root_path, class: "nav-cta" do %>
+        Open dashboard &rarr;
+      <% end %>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow"><span class="dot"></span> Mountable Rails engine</span>
+
+      <h1>Email newsletters,<br><span>without the newsletter SaaS.</span></h1>
+
+      <p class="lede">
+        Lists, subscribers, MJML campaigns, and open/click tracking — mounted
+        straight into your existing Rails app. Bring your own auth and your
+        own mailer; Carriage brings the rest.
+      </p>
+
+      <div class="hero-actions">
+        <%= link_to "Open the dashboard", carriage.root_path, class: "btn-primary" %>
+        <a href="#integrate" class="btn-secondary">See the integration</a>
+      </div>
+
+      <div class="codebox">
+        <div><span class="comment"># Gemfile</span></div>
+        <div><span class="gem">gem</span> "carriage"</div>
+      </div>
+    </div>
+  </header>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Features</div>
+        <h2>Everything a newsletter needs, nothing it doesn't</h2>
+        <p>v1 keeps a tight, opinionated scope so it's easy to reason about and easy to eject from.</p>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </div>
+          <h3>Lists &amp; subscribers</h3>
+          <p>Per-list custom fields, CSV import/export, and durable opt-out state that survives re-imports.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 9v11"/></svg>
+          </div>
+          <h3>MJML campaigns</h3>
+          <p>A field-based editor for subject, heading, body, and CTA &mdash; rendered through a responsive MJML template.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l7 5 7-5M4 17h9"/><path d="M20 13v6M20 22v.01"/></svg>
+          </div>
+          <h3>Rich text body</h3>
+          <p>Action Text &amp; Trix out of the box &mdash; bold, links, lists, and images, no block editor to build.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <h3>Test, schedule, or send</h3>
+          <p>Send a test to yourself, schedule for later, or send now &mdash; all fanned out per-subscriber via ActiveJob.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 12h6M3 12l3-3M3 12l3 3"/></svg>
+          </div>
+          <h3>Open &amp; click tracking</h3>
+          <p>Its own open pixel and click-redirects, joined cleanly back to each subscriber &mdash; no ahoy_matey.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z"/></svg>
+          </div>
+          <h3>Basic segmentation</h3>
+          <p>Per-list custom fields on every subscriber, ready for an audience-builder UI down the line.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="integrate" class="steps-section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Integration</div>
+        <h2>Three steps in, on your terms</h2>
+        <p>No SMTP config, no auth system, no forced templates &mdash; Carriage uses what your app already has.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Install &amp; migrate</h3>
+          <p>Add the gem, copy its migrations alongside mailkick's, and migrate.</p>
+          <pre>bundle add carriage
+bin/rails carriage:install:migrations
+bin/rails db:migrate</pre>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Mount it, guarded by your auth</h3>
+          <p>Carriage ships with zero built-in auth &mdash; wrap the admin engine however your app already gates admin tools. The public engine (tracking, unsubscribe, signup) is a separate mount, left open for anonymous subscribers.</p>
+          <pre>authenticate :user, ->(u) { u.admin? } do
+  mount Carriage::Engine => "/carriage"
+end
+mount Carriage::Public::Engine => "/c"</pre>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Point it at your mailer</h3>
+          <p>Set a from address; Carriage delivers through your app's own ActionMailer config.</p>
+          <pre>Carriage.default_from_address =
+  "news@yourapp.com"</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Philosophy</div>
+        <h2>Simple on purpose</h2>
+      </div>
+
+      <div class="ethos">
+        <div class="ethos-card">
+          <h3><span class="badge"></span> No new infrastructure</h3>
+          <p>No separate SMTP relay, no third-party API keys. Your existing ActionMailer setup delivers every send.</p>
+        </div>
+        <div class="ethos-card">
+          <h3><span class="badge"></span> No new auth system</h3>
+          <p>Mount it behind whatever already guards your admin panel &mdash; Devise, Rodauth, Basic Auth, anything.</p>
+        </div>
+        <div class="ethos-card">
+          <h3><span class="badge"></span> Isolated &amp; swappable internals</h3>
+          <p>MJML rendering, tracking, and CSV import each live behind a single service object, so they're easy to replace later.</p>
+        </div>
+        <div class="ethos-card">
+          <h3><span class="badge"></span> Deliberately small v1</h3>
+          <p>One template, field-based editing, basic segmentation. No drag-and-drop builder or bounce handling yet &mdash; by design.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="subscribe" class="subscribe-section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Try it</div>
+        <h2>Subscribe to the demo list</h2>
+        <p>This form posts straight to Carriage's public signup endpoint &mdash; no host-app code beyond the form below.</p>
+      </div>
+
+      <%= form_with url: Carriage::Public::Engine.routes.url_helpers.list_signup_path(@list), method: :post, class: "subscribe-form" do %>
+        <%= email_field_tag "subscriber[email]", nil, placeholder: "you@example.com", required: true, class: "subscribe-input" %>
+        <%= submit_tag "Subscribe", class: "btn-primary" %>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="footer-cta">
+    <div class="wrap">
+      <h2>Mount it and send your first campaign today.</h2>
+      <p>It's already running right here in this app.</p>
+      <%= link_to "Open the dashboard", carriage.root_path, class: "btn-primary" %>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="brand">
+        <%= image_tag "/icon.svg", alt: "" %>
+      </div>
+      <span>Carriage &middot; a mountable Rails engine</span>
+    </div>
+  </footer>
+</div>

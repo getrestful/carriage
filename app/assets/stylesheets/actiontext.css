@@ -438,3 +438,15 @@ trix-editor .attachment__metadata {
   padding: 0 !important;
   max-width: 100% !important;
 }
+
+/*
+ * Trix shows the "filename (size)" pair as a stand-in caption until the
+ * editor actually types one; hide that placeholder text so an image looks
+ * caption-less unless a real caption was entered. The figcaption itself
+ * stays in the DOM (still clickable/editable to add a caption), only its
+ * default child spans are hidden.
+*/
+.trix-content .attachment__caption .attachment__name,
+.trix-content .attachment__caption .attachment__size {
+  display: none;
+}

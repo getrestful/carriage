@@ -1,0 +1,5 @@
+<%= t(".body", list: @list.name) %>
+
+<%= t(".confirm_button") %>: <%= Carriage::Public::Engine.routes.url_helpers.confirm_subscription_url(token: @token, **Carriage::ApplicationMailer.default_url_options) %>
+
+<%= t(".ignore_notice") %>

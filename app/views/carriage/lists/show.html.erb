@@ -15,7 +15,10 @@
 
 <div class="mb-4 flex items-center justify-between">
   <h2 class="text-base font-semibold text-gray-900">Subscribers <span class="font-normal text-gray-500">(<%= @subscriber_count %> active)</span></h2>
-  <%= link_to "Add subscriber", new_list_subscriber_path(@list), class: "text-sm font-medium text-indigo-600 hover:text-indigo-700" %>
+  <%= link_to new_list_subscriber_path(@list), class: "inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700" do %>
+    <%= lucide_icon "user-plus", size: 16 %>
+    Add subscriber
+  <% end %>
 </div>
 
 <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -32,22 +35,24 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-100">
-      <% @subscribers.each do |subscriber| %>
+      <% @subscriptions.each do |subscription| %>
+        <% subscriber = subscription.subscriber %>
         <tr class="hover:bg-gray-50">
           <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= subscriber.email %></td>
           <td class="px-6 py-4 text-sm text-gray-500"><%= [ subscriber.first_name, subscriber.last_name ].compact.join(" ") %></td>
           <% @list.field_names.each do |field_name| %>
             <td class="px-6 py-4 text-sm text-gray-500"><%= subscriber.custom_fields[field_name] %></td>
           <% end %>
-          <td class="px-6 py-4 text-sm">
-            <% if subscriber.subscribed?(@list.name) %>
-              <span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">Subscribed</span>
-            <% else %>
-              <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">Unsubscribed</span>
-            <% end %>
-          </td>
-          <td class="px-6 py-4 text-right text-sm">
-            <%= button_to "Remove", list_subscriber_path(@list, subscriber), method: :delete, data: { turbo_confirm: "Remove this subscriber from the list?" }, class: "font-medium text-red-600 hover:text-red-700" %>
+          <td class="px-6 py-4 text-sm"><%= render "carriage/shared/status_badge", status: subscription.status %></td>
+          <td class="px-6 py-2 text-right text-sm">
+            <div class="flex items-center justify-end gap-4 leading-none">
+              <%= link_to edit_list_subscriber_path(@list, subscriber), class: "inline-flex items-center gap-2 font-medium text-indigo-600 hover:bg-neutral-200 cursor-pointer rounded p-2" do %>
+                <%= lucide_icon "pencil", size: 16 %>
+              <% end %>
+              <%= button_to list_subscriber_path(@list, subscriber), method: :delete, data: { turbo_confirm: "Remove this subscriber from the list?" }, class: "inline-flex items-center gap-2 font-medium text-red-600 hover:bg-red-700 hover:text-white p-2 cursor-pointer rounded" do %>
+                <%= lucide_icon "trash-2", size: 16 %>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>

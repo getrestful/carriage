@@ -41,7 +41,13 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "localhost", port: ENV.fetch("PORT", 3000) }
+  config.action_mailer.default_url_options = { host: "localhost", port: ENV.fetch("PORT", 4444) }
+
+  # Action Text embedded-image URLs (Active Storage) are resolved via the
+  # router's default_url_options, not ActionMailer's — see README's
+  # "Rich text campaign body" section.
+  Rails.application.routes.default_url_options[:host] = "localhost"
+  Rails.application.routes.default_url_options[:port] = ENV.fetch("PORT", 4444)
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

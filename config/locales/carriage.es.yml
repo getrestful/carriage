@@ -1,0 +1,36 @@
+es:
+  carriage:
+    public:
+      unsubscribes:
+        show:
+          unsubscribed_heading: "Te has dado de baja"
+          unsubscribed_message: "No recibirás más correos de esta lista."
+          invalid_heading: "Enlace no válido"
+          invalid_message: "Este enlace de baja ya no es válido."
+          homepage_link: "Ir a la página principal"
+      signups:
+        new:
+          heading: "Suscríbete a %{list}"
+          email_label: "Correo electrónico"
+          first_name_label: "Nombre"
+          last_name_label: "Apellido"
+          submit: "Suscribirse"
+        pending:
+          heading: "Ya casi está"
+          message: "Hemos enviado un enlace de confirmación a %{email}. Haz clic en él para empezar a recibir correos."
+      confirmations:
+        show:
+          confirmed_heading: "Suscripción confirmada"
+          confirmed_message: "Ahora estás suscrito a %{list}."
+          invalid_heading: "Enlace no válido"
+          invalid_message: "Este enlace de confirmación ya no es válido."
+          homepage_link: "Ir a la página principal"
+    campaign_mailer:
+      campaign:
+        unsubscribe_link_text: "Darse de baja"
+    confirmation_mailer:
+      confirm_email:
+        subject: "Confirma tu suscripción a %{list}"
+        body: "Confirma que deseas recibir correos de %{list}."
+        confirm_button: "Confirmar suscripción"
+        ignore_notice: "Si no has solicitado esto, puedes ignorar este correo."

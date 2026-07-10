@@ -15,7 +15,7 @@
         <% end %>
 
         <mj-text font-size="15px" line-height="1.5">
-          <%= raw @campaign.body_html %>
+          <%= raw Carriage::CampaignBodyRenderer.for_email(@campaign.body_html) %>
         </mj-text>
 
         <% if @campaign.cta_label.present? && @campaign.cta_url.present? %>
@@ -34,7 +34,7 @@
           </mj-text>
         <% end %>
         <mj-text font-size="12px" color="#888888" align="center">
-          <a href="<%= unsubscribe_url(token: @delivery.token, **Carriage::ApplicationMailer.default_url_options) %>" data-skip-tracking>Unsubscribe</a>
+          <a href="<%= Carriage::Public::Engine.routes.url_helpers.unsubscribe_url(token: @delivery.token, **Carriage::ApplicationMailer.default_url_options) %>" data-skip-tracking><%= t(".unsubscribe_link_text") %></a>
         </mj-text>
       </mj-column>
     </mj-section>

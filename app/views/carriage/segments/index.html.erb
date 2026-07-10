@@ -17,12 +17,19 @@
     <tbody class="divide-y divide-gray-100">
       <% @segments.each do |segment| %>
         <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= link_to segment.name, segment_path(segment), class: "hover:text-indigo-600" %></td>
+          <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= link_to segment.name, segment_path(segment), class: "underline decoration-gray-300 hover:text-indigo-600 hover:decoration-indigo-600" %></td>
           <td class="px-6 py-4 text-sm text-gray-500"><%= segment.list.name %></td>
           <td class="px-6 py-4 text-sm text-gray-500"><%= segment.all? ? "All" : "Any" %></td>
           <td class="px-6 py-4 text-sm text-gray-500"><%= segment.conditions.size %></td>
-          <td class="px-6 py-4 text-right text-sm">
-            <%= button_to "Delete", segment_path(segment), method: :delete, data: { turbo_confirm: "Delete this segment?" }, class: "font-medium text-red-600 hover:text-red-700" %>
+          <td class="px-6 py-2 text-right text-sm">
+            <div class="flex items-center justify-end gap-4 leading-none">
+              <%= link_to edit_segment_path(segment), class: "inline-flex items-center gap-2 font-medium text-indigo-600 hover:bg-neutral-200 cursor-pointer rounded p-2" do %>
+                <%= lucide_icon "pencil", size: 16 %>
+              <% end %>
+              <%= button_to segment_path(segment), method: :delete, data: { turbo_confirm: "Delete this segment?" }, class: "inline-flex items-center gap-2 font-medium text-red-600 hover:bg-red-700 hover:text-white p-2 cursor-pointer rounded" do %>
+                <%= lucide_icon "trash-2", size: 16 %>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>

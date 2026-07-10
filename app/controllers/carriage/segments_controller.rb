@@ -9,6 +9,9 @@ module Carriage
     def show
       @subscribers = @segment.subscribers.order(:email).limit(20)
       @subscriber_count = @segment.active_subscribers.count
+      @subscriptions_by_subscriber_id = Carriage::Subscription
+        .where(list_id: @segment.list_id, subscriber_id: @subscribers.map(&:id))
+        .index_by(&:subscriber_id)
     end
 
     def new

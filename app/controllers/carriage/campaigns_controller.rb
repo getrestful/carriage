@@ -1,6 +1,14 @@
 module Carriage
   class CampaignsController < ApplicationController
     before_action :set_campaign, only: [ :show, :edit, :update, :destroy, :preview, :send_test, :send_now, :schedule, :duplicate ]
+    layout "carriage/fullscreen", only: :edit
+
+    # The edit screen's live preview POSTs here on every debounced keystroke. Rails' per-form
+    # CSRF tokens (the default since 5.2) scope the edit form's embedded token to its own
+    # path+method (PATCH /campaigns/:id), so it fails verification against this different
+    # path/method. Safe to skip: preview only assign_attributes's (never saves), so there's no
+    # state-changing action for CSRF to protect here.
+    skip_before_action :verify_authenticity_token, only: :preview
 
     def index
       @campaigns = Carriage::Campaign.order(created_at: :desc)
@@ -40,6 +48,11 @@ module Carriage
     end
 
     def preview
+      # Live preview from the edit screen posts the in-progress form fields here to render
+      # them unsaved; assign_attributes only, never save, so a mid-edit preview can't persist
+      # a half-finished campaign.
+      @campaign.assign_attributes(campaign_params) if params[:campaign]
+
       delivery = Carriage::Delivery.new(campaign: @campaign, subscriber: Carriage::Subscriber.new(email: "preview@example.com"), token: "preview")
       mjml_source = ActionText::Content.with_renderer(Carriage::ActionTextRenderer.renderer) do
         render_to_string(

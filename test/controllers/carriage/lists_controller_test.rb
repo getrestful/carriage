@@ -22,6 +22,18 @@ module Carriage
       assert_match "a@example.com", response.body
     end
 
+    test "shows an unconfirmed subscriber as pending, not subscribed" do
+      list = Carriage::List.create!(name: "Weekly")
+      subscriber = Carriage::Subscriber.create!(email: "a@example.com")
+      Carriage::Subscription.create!(list: list, subscriber: subscriber, require_confirmation: true)
+
+      get "/carriage/lists/#{list.id}"
+
+      assert_response :success
+      assert_match "Pending", response.body
+      assert_no_match(/>\s*Subscribed\s*</, response.body)
+    end
+
     test "export downloads a CSV of the list's subscribers" do
       list = Carriage::List.create!(name: "Weekly")
       subscriber = Carriage::Subscriber.create!(email: "a@example.com", first_name: "Ada")

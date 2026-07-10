@@ -1,0 +1,36 @@
+fr:
+  carriage:
+    public:
+      unsubscribes:
+        show:
+          unsubscribed_heading: "Vous avez été désabonné"
+          unsubscribed_message: "Vous ne recevrez plus d'e-mails de cette liste."
+          invalid_heading: "Lien non valide"
+          invalid_message: "Ce lien de désabonnement n'est plus valide."
+          homepage_link: "Aller à la page d'accueil"
+      signups:
+        new:
+          heading: "S'abonner à %{list}"
+          email_label: "E-mail"
+          first_name_label: "Prénom"
+          last_name_label: "Nom"
+          submit: "S'abonner"
+        pending:
+          heading: "Presque terminé"
+          message: "Nous avons envoyé un lien de confirmation à %{email}. Cliquez dessus pour commencer à recevoir des e-mails."
+      confirmations:
+        show:
+          confirmed_heading: "Abonnement confirmé"
+          confirmed_message: "Vous êtes maintenant abonné à %{list}."
+          invalid_heading: "Lien non valide"
+          invalid_message: "Ce lien de confirmation n'est plus valide."
+          homepage_link: "Aller à la page d'accueil"
+    campaign_mailer:
+      campaign:
+        unsubscribe_link_text: "Se désabonner"
+    confirmation_mailer:
+      confirm_email:
+        subject: "Merci de confirmer votre abonnement à %{list}"
+        body: "Merci de confirmer que vous souhaitez recevoir des e-mails de %{list}."
+        confirm_button: "Confirmer l'abonnement"
+        ignore_notice: "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail."

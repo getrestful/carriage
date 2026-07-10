@@ -1,0 +1,16 @@
+<div style="font-family: Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 24px; color: #1f2937;">
+  <p style="font-size: 15px; line-height: 1.5;">
+    <%= t(".body", list: @list.name) %>
+  </p>
+
+  <p style="margin: 24px 0;">
+    <a href="<%= Carriage::Public::Engine.routes.url_helpers.confirm_subscription_url(token: @token, **Carriage::ApplicationMailer.default_url_options) %>"
+       style="display: inline-block; background-color: #4c6ef5; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 600;">
+      <%= t(".confirm_button") %>
+    </a>
+  </p>
+
+  <p style="font-size: 12px; color: #888888;">
+    <%= t(".ignore_notice") %>
+  </p>
+</div>

@@ -15,9 +15,18 @@
     <tbody class="divide-y divide-gray-100">
       <% @lists.each do |list| %>
         <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= link_to list.name, list_path(list), class: "hover:text-indigo-600" %></td>
+          <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= link_to list.name, list_path(list), class: "underline decoration-gray-300 hover:text-indigo-600 hover:decoration-indigo-600" %></td>
           <td class="px-6 py-4 text-sm text-gray-500"><%= list.active_subscribers.count %></td>
-          <td class="px-6 py-4 text-right text-sm"><%= link_to "Edit", edit_list_path(list), class: "font-medium text-indigo-600 hover:text-indigo-700" %></td>
+          <td class="px-6 py-2 text-right text-sm">
+            <div class="flex items-center justify-end gap-4 leading-none">
+              <%= link_to edit_list_path(list), class: "inline-flex items-center gap-2 font-medium text-indigo-600 hover:bg-neutral-200 cursor-pointer rounded p-2" do %>
+                <%= lucide_icon "pencil", size: 16 %>
+              <% end %>
+              <%= button_to list_path(list), method: :delete, data: { turbo_confirm: "Delete this list?" }, class: "inline-flex items-center gap-2 font-medium text-red-600 hover:bg-red-700 hover:text-white p-2 cursor-pointer rounded" do %>
+                <%= lucide_icon "trash-2", size: 16 %>
+              <% end %>
+            </div>
+          </td>
         </tr>
       <% end %>
     </tbody>

@@ -1,0 +1,36 @@
+it:
+  carriage:
+    public:
+      unsubscribes:
+        show:
+          unsubscribed_heading: "Ti sei disiscritto"
+          unsubscribed_message: "Non riceverai più email da questa lista."
+          invalid_heading: "Link non più valido"
+          invalid_message: "Questo link di disiscrizione non è più valido."
+          homepage_link: "Vai alla homepage"
+      signups:
+        new:
+          heading: "Iscriviti a %{list}"
+          email_label: "Email"
+          first_name_label: "Nome"
+          last_name_label: "Cognome"
+          submit: "Iscriviti"
+        pending:
+          heading: "Ci siamo quasi"
+          message: "Abbiamo inviato un link di conferma a %{email}. Cliccalo per iniziare a ricevere le email."
+      confirmations:
+        show:
+          confirmed_heading: "Iscrizione confermata"
+          confirmed_message: "Ora sei iscritto a %{list}."
+          invalid_heading: "Link non più valido"
+          invalid_message: "Questo link di conferma non è più valido."
+          homepage_link: "Vai alla homepage"
+    campaign_mailer:
+      campaign:
+        unsubscribe_link_text: "Disiscriviti"
+    confirmation_mailer:
+      confirm_email:
+        subject: "Conferma la tua iscrizione a %{list}"
+        body: "Conferma di voler ricevere le email da %{list}."
+        confirm_button: "Conferma iscrizione"
+        ignore_notice: "Se non hai richiesto tu questa iscrizione, puoi ignorare questa email."

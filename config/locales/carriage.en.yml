@@ -1,0 +1,36 @@
+en:
+  carriage:
+    public:
+      unsubscribes:
+        show:
+          unsubscribed_heading: "You've been unsubscribed"
+          unsubscribed_message: "You won't receive further emails from this list."
+          invalid_heading: "Link no longer valid"
+          invalid_message: "This unsubscribe link is no longer valid."
+          homepage_link: "Go to homepage"
+      signups:
+        new:
+          heading: "Subscribe to %{list}"
+          email_label: "Email"
+          first_name_label: "First name"
+          last_name_label: "Last name"
+          submit: "Subscribe"
+        pending:
+          heading: "Almost there"
+          message: "We've sent a confirmation link to %{email}. Click it to start receiving emails."
+      confirmations:
+        show:
+          confirmed_heading: "Subscription confirmed"
+          confirmed_message: "You're now subscribed to %{list}."
+          invalid_heading: "Link no longer valid"
+          invalid_message: "This confirmation link is no longer valid."
+          homepage_link: "Go to homepage"
+    campaign_mailer:
+      campaign:
+        unsubscribe_link_text: "Unsubscribe"
+    confirmation_mailer:
+      confirm_email:
+        subject: "Please confirm your subscription to %{list}"
+        body: "Please confirm you'd like to receive emails from %{list}."
+        confirm_button: "Confirm subscription"
+        ignore_notice: "If you didn't request this, you can safely ignore this email."

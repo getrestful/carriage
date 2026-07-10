@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+cd "$(dirname "$0")/.."
+
+pids=()
+trap 'kill "${pids[@]}" 2>/dev/null' EXIT INT TERM
+
+bin/rails app:carriage:watch_css &
+pids+=($!)
+
+bin/rails server "$@" &
+pids+=($!)
+
+wait -n

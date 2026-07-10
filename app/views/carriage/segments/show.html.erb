@@ -41,16 +41,11 @@
     </thead>
     <tbody class="divide-y divide-gray-100">
       <% @subscribers.each do |subscriber| %>
+        <% subscription = @subscriptions_by_subscriber_id[subscriber.id] %>
         <tr class="hover:bg-gray-50">
           <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= subscriber.email %></td>
           <td class="px-6 py-4 text-sm text-gray-500"><%= [ subscriber.first_name, subscriber.last_name ].compact.join(" ") %></td>
-          <td class="px-6 py-4 text-sm">
-            <% if subscriber.subscribed?(@segment.list.name) %>
-              <span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">Subscribed</span>
-            <% else %>
-              <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">Unsubscribed</span>
-            <% end %>
-          </td>
+          <td class="px-6 py-4 text-sm"><%= render "carriage/shared/status_badge", status: subscription.status %></td>
         </tr>
       <% end %>
     </tbody>

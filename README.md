@@ -31,15 +31,28 @@ bin/rails db:migrate
 migration, since Carriage uses [mailkick](https://github.com/ankane/mailkick)
 for per-list subscribe/unsubscribe bookkeeping.
 
-Mount the engine and add your own authentication around it — Carriage ships
-with **zero** built-in auth:
+Carriage ships as **two separate mountable engines**, so you can put your own
+auth around just the admin one:
 
 ```ruby
 # config/routes.rb
 authenticate :user, ->(u) { u.admin? } do
   mount Carriage::Engine => "/carriage"
 end
+mount Carriage::Public::Engine => "/c"
 ```
+
+`Carriage::Engine` is the admin UI (lists, campaigns, subscribers) — wrap it
+in whatever auth your app already uses. `Carriage::Public::Engine` is the
+public, unauthenticated surface Carriage embeds in outgoing email and links
+from your own pages: the tracking pixel/click redirect, unsubscribe, and
+signup/opt-in confirmation. Real subscribers hitting those links aren't
+logged into your app, so they need their own mount point, outside any
+`authenticate` block — mount it at whatever path you like (`/c` above is just
+an example).
+
+Carriage ships with **zero** built-in auth on either engine — the
+`authenticate` block above is your app's own auth, not Carriage's.
 
 Set a default From address and make sure `config.action_mailer.default_url_options`
 (host) is set — Carriage's tracking links and unsubscribe links need it:
@@ -77,6 +90,51 @@ bookkeeping kept in sync as a courtesy. `Carriage::Subscription#unsubscribed_at`
 is the durable source of truth for opt-out (mailkick itself has no persistent
 opt-out state — its "unsubscribe" is a hard delete, which would otherwise let
 a re-import silently resubscribe someone).
+
+## Signup and double opt-in
+
+Carriage ships a public, unauthenticated signup form per list (served by
+`Carriage::Public::Engine` — see "Installation" above) so host apps can link
+or embed it without building their own controller:
+
+```erb
+<%= link_to "Subscribe", Carriage::Public::Engine.routes.url_helpers.list_signup_path(list) %>
+```
+
+Submitting the form creates the subscriber and subscription, then emails a
+confirmation link (`Carriage::ConfirmationMailer#confirm_email`). The
+subscription is **not** send-eligible until that link is clicked —
+`Carriage::Subscription#confirmed_at` is what gates it, and
+`List#active_subscribers`/`Segment#active_subscribers` (and therefore every
+campaign send) already filter on it.
+
+This only applies to the public signup path. Subscribers added through the
+admin UI ("Add subscriber") or CSV import are auto-confirmed immediately —
+an admin adding/importing an address is already vouching for it, so asking
+that address to additionally click a confirmation link would just mean
+CSV-imported existing customers silently stop receiving mail until they
+re-confirm. If you need every path to require confirmation, call
+`Carriage::Subscription.new(list:, subscriber:, require_confirmation: true)`
+yourself instead of `find_or_create_by`.
+
+**Customizing text.** All signup/confirmation copy — form labels, the
+"check your email" page, the confirmation page, the confirmation email's
+subject/body — lives under the `carriage.public.signups.*`,
+`carriage.public.confirmations.*`, and `carriage.confirmation_mailer.*` I18n
+keys (English, German, Italian, French, Spanish ship by default). Override
+any of them by defining the same key in your host app's own `config/locales`
+— app-level translations load after the engine's and win on conflict, no
+engine changes needed.
+
+**Customizing markup.** The views
+(`app/views/carriage/public/signups/{new,pending}.html.erb`,
+`app/views/carriage/public/confirmations/show.html.erb`) and the mailer
+template (`app/views/carriage/confirmation_mailer/confirm_email.{html,text}.erb`)
+are plain Rails views under Carriage's normal `carriage/` view path. Drop a
+file at the same path under your host app's `app/views/` to override just
+that one view — standard Rails view resolution checks the host app's view
+paths before the engine's, same mechanism you'd use to override any other
+Carriage view.
 
 ## Rich text campaign body
 
@@ -169,7 +227,6 @@ mail in a browser instead of actually delivering it.
 - A/B testing
 - Bounce/complaint webhook handling
 - List segmentation
-- Double opt-in flows
 - Background/chunked processing of very large CSV imports
 
 ## License

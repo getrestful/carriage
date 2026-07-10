@@ -24,6 +24,22 @@ module Carriage
       assert_match "</html>", response.body
     end
 
+    test "posting unsaved edits to preview renders them without persisting" do
+      post "/carriage/campaigns/#{@campaign.id}/preview", params: { campaign: { heading: "Unsaved heading" } }
+
+      assert_response :success
+      assert_match "Unsaved heading", response.body
+      assert_nil @campaign.reload.heading
+    end
+
+    test "edit renders the fullscreen split-pane layout" do
+      get "/carriage/campaigns/#{@campaign.id}/edit"
+
+      assert_response :success
+      assert_match "campaign-preview-frame", response.body
+      assert_no_match "<nav", response.body
+    end
+
     test "send_test enqueues a test email job for a valid address" do
       assert_enqueued_with(job: Carriage::DeliverTestEmailJob, args: [ @campaign.id, "tester@example.com" ]) do
         post "/carriage/campaigns/#{@campaign.id}/send_test", params: { test_email: "tester@example.com" }

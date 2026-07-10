@@ -25,8 +25,8 @@ module Carriage
       mail = Carriage::CampaignMailer.campaign_email(@delivery)
       body = mail.body.to_s
 
-      assert_match %r{/carriage/c/}, body
-      assert_match %r{/carriage/o/#{@delivery.token}}, body
+      assert_match %r{/c/c/}, body
+      assert_match %r{/c/o/#{@delivery.token}}, body
       assert_no_match %r{href="https://example.com/go"}, body
     end
 

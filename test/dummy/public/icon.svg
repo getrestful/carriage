@@ -1,3 +1,17 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon">
+            <rect id="Rectangle" fill="#4F46E5" fill-rule="nonzero" x="0" y="0" width="512" height="512" rx="112"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="97" y="169" width="318" height="174" rx="19"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" x="82" y="304" width="349" height="17"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" x="79.5294118" y="298" width="11.9411765" height="29"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" x="79.5294118" y="298" width="12" height="29"></rect>
+            <rect id="Rectangle-Copy" fill="#FFFFFF" x="422.529412" y="298" width="12" height="29"></rect>
+            <path d="M122.899318,182 L389.100682,182 C391.862106,182 394.100682,184.238576 394.100682,187 C394.100682,188.633958 393.302308,190.164832 391.962451,191.100034 L263.440599,280.806562 C258.970768,283.926444 253.029232,283.926444 248.559401,280.806562 L120.037549,191.100034 C117.773163,189.519523 117.218772,186.402618 118.799284,184.138231 C119.734486,182.798374 121.265359,182 122.899318,182 Z" id="Path" fill="#4338CA" fill-rule="nonzero"></path>
+            <circle id="Oval" stroke="#4F46E5" stroke-width="6" fill="#FFFFFF" fill-rule="nonzero" cx="147" cy="342" r="23"></circle>
+            <circle id="Oval-Copy" stroke="#4F46E5" stroke-width="6" fill="#FFFFFF" fill-rule="nonzero" cx="360" cy="342" r="23"></circle>
+        </g>
+    </g>
 </svg>

@@ -7,7 +7,7 @@ module Carriage
     end
 
     def show
-      @subscribers = @list.subscribers.order(:email).limit(20)
+      @subscriptions = @list.subscriptions.includes(:subscriber).order("carriage_subscribers.email").limit(20)
       @subscriber_count = @list.active_subscribers.count
     end
 
