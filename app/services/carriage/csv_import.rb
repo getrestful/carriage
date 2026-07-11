@@ -21,19 +21,18 @@ module Carriage
           next
         end
 
-        subscriber = Carriage::Subscriber.find_or_initialize_by(email: email)
-        subscriber.first_name = row[@mapping["first_name"]] if @mapping["first_name"].present?
-        subscriber.last_name = row[@mapping["last_name"]] if @mapping["last_name"].present?
-
         # Custom field columns are matched by name against the list's own schema, no mapping UI.
-        @list.field_names.each do |field_name|
-          next unless row.headers.include?(field_name)
-          subscriber.custom_fields = subscriber.custom_fields.merge(field_name => row[field_name])
+        custom_fields = @list.field_names.each_with_object({}) do |field_name, memo|
+          memo[field_name] = row[field_name] if row.headers.include?(field_name)
         end
 
-        subscriber.save!
+        subscription = @list.add_subscriber(
+          email: email,
+          first_name: (row[@mapping["first_name"]] if @mapping["first_name"].present?),
+          last_name: (row[@mapping["last_name"]] if @mapping["last_name"].present?),
+          custom_fields: custom_fields
+        )
 
-        subscription = Carriage::Subscription.find_or_create_by(list: @list, subscriber: subscriber)
         if subscription.previously_new_record?
           created += 1
         else

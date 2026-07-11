@@ -14,6 +14,26 @@ module Carriage
       subscribers.merge(Carriage::Subscription.active)
     end
 
+    # Consolidates the "find-or-create subscriber, then join to this list" flow that the
+    # CSV importer, the admin "add subscriber" form, and the public signup form each used to
+    # reimplement independently (and had drifted on: only the signup form set
+    # require_confirmation). Idempotent — calling it twice for the same email returns the
+    # existing subscription rather than raising, so host apps can call it unconditionally
+    # without checking membership first. Raises ActiveRecord::RecordInvalid (with the unsaved
+    # Subscriber as e.record) if the email is missing/invalid; callers that need to redisplay
+    # a form with errors should rescue and render from e.record.
+    def add_subscriber(email:, first_name: nil, last_name: nil, custom_fields: {}, require_confirmation: false)
+      subscriber = Carriage::Subscriber.find_or_initialize_by(email: email.to_s.strip.downcase)
+      subscriber.first_name = first_name if first_name
+      subscriber.last_name = last_name if last_name
+      subscriber.custom_fields = subscriber.custom_fields.merge(custom_fields.slice(*field_names))
+      subscriber.save!
+
+      subscriptions.find_or_create_by(subscriber: subscriber) do |subscription|
+        subscription.require_confirmation = require_confirmation
+      end
+    end
+
     def field_names
       fields.map { |field| field["name"] }
     end

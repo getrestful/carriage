@@ -11,15 +11,16 @@ module Carriage
     end
 
     def create
-      @subscriber = Carriage::Subscriber.find_or_initialize_by(email: params[:subscriber][:email].to_s.strip.downcase)
-      assign_subscriber_attributes
-
-      if @subscriber.save
-        Carriage::Subscription.find_or_create_by!(list: @list, subscriber: @subscriber)
-        redirect_to list_path(@list), notice: "Subscriber added."
-      else
-        render :new, status: :unprocessable_entity
-      end
+      @list.add_subscriber(
+        email: params[:subscriber][:email],
+        first_name: params[:subscriber][:first_name],
+        last_name: params[:subscriber][:last_name],
+        custom_fields: custom_field_params
+      )
+      redirect_to list_path(@list), notice: "Subscriber added."
+    rescue ActiveRecord::RecordInvalid => e
+      @subscriber = e.record
+      render :new, status: :unprocessable_entity
     end
 
     def edit

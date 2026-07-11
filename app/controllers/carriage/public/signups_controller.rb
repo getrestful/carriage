@@ -8,19 +8,18 @@ module Carriage
       end
 
       def create
-        @subscriber = Carriage::Subscriber.find_or_initialize_by(email: params.dig(:subscriber, :email).to_s.strip.downcase)
-        @subscriber.first_name = params.dig(:subscriber, :first_name)
-        @subscriber.last_name = params.dig(:subscriber, :last_name)
-        @subscriber.custom_fields = @subscriber.custom_fields.merge(custom_field_params)
-
-        if @subscriber.save
-          Carriage::Subscription.find_or_create_by!(list: @list, subscriber: @subscriber) do |subscription|
-            subscription.require_confirmation = true
-          end
-          render :pending
-        else
-          render :new, status: :unprocessable_entity
-        end
+        subscription = @list.add_subscriber(
+          email: params.dig(:subscriber, :email),
+          first_name: params.dig(:subscriber, :first_name),
+          last_name: params.dig(:subscriber, :last_name),
+          custom_fields: custom_field_params,
+          require_confirmation: true
+        )
+        @subscriber = subscription.subscriber
+        render :pending
+      rescue ActiveRecord::RecordInvalid => e
+        @subscriber = e.record
+        render :new, status: :unprocessable_entity
       end
 
       private

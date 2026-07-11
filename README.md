@@ -7,9 +7,7 @@ ActionMailer configuration to actually deliver mail; Carriage has no SMTP
 config of its own.
 
 v1 ships a single static template with a field-based campaign editor
-(subject/heading/body/CTA/footer). Drag-and-drop editing, multiple templates,
-segmentation, and bounce handling are not in scope yet — see "Deferred to v2"
-below.
+(subject/heading/body/CTA/footer).
 
 ## Installation
 
@@ -72,7 +70,7 @@ Queue recurring tasks, plain cron, ...), running at least once a minute:
 bin/rails carriage:deliver_due_campaigns
 ```
 
-This rake task only *enqueues* `Carriage::DeliverCampaignJob` via ActiveJob —
+This rake task only _enqueues_ `Carriage::DeliverCampaignJob` via ActiveJob —
 if your host app uses the in-process `:async` adapter (Rails' dev default),
 a short-lived rake-task process may exit before the enqueued job runs. Use a
 persistent adapter (Sidekiq, GoodJob, Solid Queue, etc.) for reliable delivery
@@ -109,13 +107,13 @@ subscription is **not** send-eligible until that link is clicked —
 campaign send) already filter on it.
 
 This only applies to the public signup path. Subscribers added through the
-admin UI ("Add subscriber") or CSV import are auto-confirmed immediately —
-an admin adding/importing an address is already vouching for it, so asking
-that address to additionally click a confirmation link would just mean
-CSV-imported existing customers silently stop receiving mail until they
-re-confirm. If you need every path to require confirmation, call
-`Carriage::Subscription.new(list:, subscriber:, require_confirmation: true)`
-yourself instead of `find_or_create_by`.
+admin UI ("Add subscriber"), CSV import, or `List#add_subscriber` (see "Ruby
+API" below) are auto-confirmed immediately — an admin adding/importing an
+address is already vouching for it, so asking that address to additionally
+click a confirmation link would just mean CSV-imported existing customers
+silently stop receiving mail until they re-confirm. If you need a
+particular call to require confirmation, pass `require_confirmation: true`
+to `List#add_subscriber`.
 
 **Customizing text.** All signup/confirmation copy — form labels, the
 "check your email" page, the confirmation page, the confirmation email's
@@ -135,6 +133,43 @@ file at the same path under your host app's `app/views/` to override just
 that one view — standard Rails view resolution checks the host app's view
 paths before the engine's, same mechanism you'd use to override any other
 Carriage view.
+
+## Ruby API
+
+All of Carriage's models are plain `ActiveRecord` classes under the
+`Carriage::` namespace, so a host app can query them directly once the
+engine is mounted:
+
+```ruby
+Carriage::List.all
+Carriage::List.find(id).active_subscribers   # confirmed + not unsubscribed
+Carriage::Campaign.draft                     # enum scopes: draft/scheduled/sending/sent
+```
+
+To add a subscriber to a list from your own code (instead of the public
+signup form or the admin UI), use `List#add_subscriber`:
+
+```ruby
+list = Carriage::List.find(id)
+list.add_subscriber(
+  email: "jane@example.com",
+  first_name: "Jane",
+  last_name: "Doe",
+  custom_fields: { "company" => "Acme" }, # keys not in list.field_names are dropped
+  require_confirmation: false             # true sends a double opt-in email instead
+)
+```
+
+It finds-or-creates the `Carriage::Subscriber` by (normalized) email and
+joins it to the list, returning the `Carriage::Subscription`. It's
+idempotent — calling it again with the same email returns the existing
+subscription rather than creating a duplicate — so you don't need to check
+membership first. On an invalid email it raises `ActiveRecord::RecordInvalid`
+with the unsaved `Subscriber` as `error.record`.
+
+This is the same method the CSV importer, the admin "add subscriber" form,
+and the public signup form all call internally, so it stays in sync with
+whatever those paths do.
 
 ## Rich text campaign body
 
@@ -223,10 +258,7 @@ mail in a browser instead of actually delivering it.
 
 - Drag-and-drop / block-based visual campaign editor
 - Multiple selectable templates
-- Per-user auth/roles within Carriage itself
-- A/B testing
 - Bounce/complaint webhook handling
-- List segmentation
 - Background/chunked processing of very large CSV imports
 
 ## License

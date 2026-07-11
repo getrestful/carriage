@@ -2,8 +2,8 @@
 /test/dummy/log/*
 /test/dummy/storage/*
 !/test/dummy/log/.keep
-!/test/tmp/.keep
-!/test/storage/.keep
+!/test/dummy/tmp/.keep
+!/test/dummy/storage/.keep
 
 *.rbc
 capybara-*.html
