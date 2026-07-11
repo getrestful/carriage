@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.bigint "record_id", null: false
     t.string "record_type", null: false
     t.datetime "updated_at", null: false
-    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+    t.index [ "record_type", "record_id", "name" ], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -27,8 +27,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.string "name", null: false
     t.bigint "record_id", null: false
     t.string "record_type", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.index [ "blob_id" ], name: "index_active_storage_attachments_on_blob_id"
+    t.index [ "record_type", "record_id", "name", "blob_id" ], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
@@ -40,13 +40,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.string "key", null: false
     t.text "metadata"
     t.string "service_name", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+    t.index [ "key" ], name: "index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+    t.index [ "blob_id", "variation_digest" ], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "carriage_campaigns", force: :cascade do |t|
@@ -64,10 +64,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.string "status", default: "draft", null: false
     t.string "subject", null: false
     t.datetime "updated_at", null: false
-    t.index ["list_id"], name: "index_carriage_campaigns_on_list_id"
-    t.index ["scheduled_at"], name: "index_carriage_campaigns_on_scheduled_at"
-    t.index ["segment_id"], name: "index_carriage_campaigns_on_segment_id"
-    t.index ["status"], name: "index_carriage_campaigns_on_status"
+    t.index [ "list_id" ], name: "index_carriage_campaigns_on_list_id"
+    t.index [ "scheduled_at" ], name: "index_carriage_campaigns_on_scheduled_at"
+    t.index [ "segment_id" ], name: "index_carriage_campaigns_on_segment_id"
+    t.index [ "status" ], name: "index_carriage_campaigns_on_status"
   end
 
   create_table "carriage_clicks", force: :cascade do |t|
@@ -78,8 +78,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.string "token", null: false
     t.datetime "updated_at", null: false
     t.text "url", null: false
-    t.index ["delivery_id"], name: "index_carriage_clicks_on_delivery_id"
-    t.index ["token"], name: "index_carriage_clicks_on_token", unique: true
+    t.index [ "delivery_id" ], name: "index_carriage_clicks_on_delivery_id"
+    t.index [ "token" ], name: "index_carriage_clicks_on_token", unique: true
   end
 
   create_table "carriage_deliveries", force: :cascade do |t|
@@ -93,10 +93,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.integer "subscriber_id", null: false
     t.string "token", null: false
     t.datetime "updated_at", null: false
-    t.index ["campaign_id", "subscriber_id"], name: "index_carriage_deliveries_on_campaign_and_subscriber", unique: true
-    t.index ["campaign_id"], name: "index_carriage_deliveries_on_campaign_id"
-    t.index ["subscriber_id"], name: "index_carriage_deliveries_on_subscriber_id"
-    t.index ["token"], name: "index_carriage_deliveries_on_token", unique: true
+    t.index [ "campaign_id", "subscriber_id" ], name: "index_carriage_deliveries_on_campaign_and_subscriber", unique: true
+    t.index [ "campaign_id" ], name: "index_carriage_deliveries_on_campaign_id"
+    t.index [ "subscriber_id" ], name: "index_carriage_deliveries_on_subscriber_id"
+    t.index [ "token" ], name: "index_carriage_deliveries_on_token", unique: true
   end
 
   create_table "carriage_lists", force: :cascade do |t|
@@ -105,7 +105,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.json "fields", default: [], null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_carriage_lists_on_name", unique: true
+    t.index [ "name" ], name: "index_carriage_lists_on_name", unique: true
   end
 
   create_table "carriage_segments", force: :cascade do |t|
@@ -115,8 +115,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.string "match_type", default: "all", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
-    t.index ["list_id", "name"], name: "index_carriage_segments_on_list_and_name", unique: true
-    t.index ["list_id"], name: "index_carriage_segments_on_list_id"
+    t.index [ "list_id", "name" ], name: "index_carriage_segments_on_list_and_name", unique: true
+    t.index [ "list_id" ], name: "index_carriage_segments_on_list_id"
   end
 
   create_table "carriage_subscribers", force: :cascade do |t|
@@ -126,7 +126,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.string "first_name"
     t.string "last_name"
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_carriage_subscribers_on_email", unique: true
+    t.index [ "email" ], name: "index_carriage_subscribers_on_email", unique: true
   end
 
   create_table "carriage_subscriptions", force: :cascade do |t|
@@ -136,9 +136,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.integer "subscriber_id", null: false
     t.datetime "unsubscribed_at"
     t.datetime "updated_at", null: false
-    t.index ["list_id", "subscriber_id"], name: "index_carriage_subscriptions_on_list_and_subscriber", unique: true
-    t.index ["list_id"], name: "index_carriage_subscriptions_on_list_id"
-    t.index ["subscriber_id"], name: "index_carriage_subscriptions_on_subscriber_id"
+    t.index [ "list_id", "subscriber_id" ], name: "index_carriage_subscriptions_on_list_and_subscriber", unique: true
+    t.index [ "list_id" ], name: "index_carriage_subscriptions_on_list_id"
+    t.index [ "subscriber_id" ], name: "index_carriage_subscriptions_on_subscriber_id"
   end
 
   create_table "mailkick_subscriptions", force: :cascade do |t|
@@ -147,7 +147,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_120000) do
     t.integer "subscriber_id"
     t.string "subscriber_type"
     t.datetime "updated_at", null: false
-    t.index ["subscriber_type", "subscriber_id", "list"], name: "index_mailkick_subscriptions_on_subscriber_and_list", unique: true
+    t.index [ "subscriber_type", "subscriber_id", "list" ], name: "index_mailkick_subscriptions_on_subscriber_and_list", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
