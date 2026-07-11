@@ -18,6 +18,13 @@
     if (form && frame.dataset.previewUrl) {
       var timer = null;
       var dirty = false;
+      // Trix loads its initial document synchronously while the editor connects, firing a
+      // trix-change before "trix-initialize" (deferred to the next animation frame) ever fires.
+      // Ignore trix-change until trix-initialize has fired so that mounting the editor with
+      // existing body_html content isn't mistaken for a user edit.
+      var trixReady = false;
+
+      form.addEventListener("trix-initialize", function () { trixReady = true; });
 
       var schedule = function () {
         clearTimeout(timer);
@@ -36,13 +43,15 @@
       };
 
       var markDirty = function () { dirty = true; };
+      var markDirtyFromTrix = function () { if (trixReady) markDirty(); };
+      var scheduleFromTrix = function () { if (trixReady) schedule(); };
 
       form.addEventListener("input", markDirty);
       form.addEventListener("change", markDirty);
-      form.addEventListener("trix-change", markDirty);
+      form.addEventListener("trix-change", markDirtyFromTrix);
       form.addEventListener("input", schedule);
       form.addEventListener("change", schedule);
-      form.addEventListener("trix-change", schedule);
+      form.addEventListener("trix-change", scheduleFromTrix);
       form.addEventListener("submit", function () { dirty = false; });
 
       window.addEventListener("beforeunload", function (event) {

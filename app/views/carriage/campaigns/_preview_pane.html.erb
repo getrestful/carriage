@@ -1,0 +1,20 @@
+<div class="flex items-center justify-center gap-1 border-b border-gray-200 bg-white px-4 py-2">
+  <button type="button" data-preview-viewport="desktop" class="preview-viewport-tab rounded-md px-3 py-1.5 text-sm font-medium flex gap-2 items-center">
+    <%= lucide_icon("monitor", class: "size-4") %>
+    Desktop
+  </button>
+  <button type="button" data-preview-viewport="mobile" class="preview-viewport-tab rounded-md px-3 py-1.5 text-sm font-medium flex gap-2 items-center">
+    <%= lucide_icon("smartphone", class: "size-4") %>
+    Mobile
+  </button>
+</div>
+
+<div class="flex-1 overflow-auto p-6">
+  <iframe
+    id="campaign-preview-frame"
+    title="Email preview"
+    data-preview-url="<%= preview_url %>"
+    src="<%= preview_url %>"
+    class="mx-auto h-full w-full rounded-lg border border-gray-200 bg-white shadow-sm transition-[width] duration-150"
+  ></iframe>
+</div>

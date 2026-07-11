@@ -12,6 +12,7 @@ Carriage::Engine.routes.draw do
   resources :campaigns do
     member do
       match :preview, via: [ :get, :post ]
+      get :preview_page
       post :send_test
       post :send_now
       post :schedule

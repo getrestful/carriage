@@ -1,7 +1,7 @@
 module Carriage
   class CampaignsController < ApplicationController
-    before_action :set_campaign, only: [ :show, :edit, :update, :destroy, :preview, :send_test, :send_now, :schedule, :duplicate ]
-    layout "carriage/fullscreen", only: :edit
+    before_action :set_campaign, only: [ :show, :edit, :update, :destroy, :preview, :preview_page, :send_test, :send_now, :schedule, :duplicate ]
+    layout "carriage/fullscreen", only: [ :edit, :preview_page ]
 
     # The edit screen's live preview POSTs here on every debounced keystroke. Rails' per-form
     # CSRF tokens (the default since 5.2) scope the edit form's embedded token to its own
@@ -32,6 +32,12 @@ module Carriage
     end
 
     def edit
+    end
+
+    # The "Preview" link on the show page opens this instead of hitting the raw
+    # #preview action directly, so it gets the same desktop/mobile toggle chrome as the
+    # edit screen's live preview pane rather than a bare rendered email in the tab.
+    def preview_page
     end
 
     def update
