@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mailkick", "~> 2.0"
   spec.add_dependency "mjml-rb", "~> 0.5"
   spec.add_dependency "csv"
-  spec.add_dependency "image_processing", "~> 1.2"
+  spec.add_dependency "image_processing", ">= 1.2", "< 3.0"
   spec.add_dependency "lucide-rails", "~> 0.7"
 
   spec.add_development_dependency "sqlite3"
