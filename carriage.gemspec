@@ -3,9 +3,9 @@ require_relative "lib/carriage/version"
 Gem::Specification.new do |spec|
   spec.name        = "carriage"
   spec.version     = Carriage::VERSION
-  spec.authors     = [ "Stefan N" ]
-  spec.email       = [ "com@flitz.ch" ]
-  spec.homepage    = "https://github.com/flitzch/carriage"
+  spec.authors     = [ "Stefan" ]
+  spec.email       = [ "stefan@getrestful.ch" ]
+  spec.homepage    = "https://github.com/getrestful/carriage"
   spec.summary     = "Embeddable email newsletter engine for Rails apps."
   spec.description = "Carriage is a mountable Rails engine that adds email newsletter " \
     "functionality (lists, campaigns, MJML templating, open/click tracking) to any host app."
