@@ -6,8 +6,8 @@ module Carriage
   # centered) since email has no external stylesheet to do it for us.
   # Nokogiri-based rather than an MJML/CSS rule because Carriage
   # deliberately doesn't ship a frozen copy of Action Text's attachment
-  # partial (see CLAUDE.md) and mjml-rb's CSS inliner (css_parser) doesn't
-  # support the :has() selector this would need.
+  # partial (see CLAUDE.md), and the MJML compiler's own CSS inliner isn't a
+  # given place to add the :has() selector this would need.
   class CampaignBodyRenderer
     def self.for_email(body_html)
       new(body_html).call
