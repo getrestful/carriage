@@ -1,6 +1,6 @@
 require "active_support/core_ext/module/attribute_accessors"
 require "mailkick"
-require "mjml-rb"
+require "mrml"
 require "lucide-rails"
 require "carriage/version"
 require "carriage/engine"
