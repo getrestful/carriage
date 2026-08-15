@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 7.1"
-  spec.add_dependency "mailkick", "~> 2.0"
+  spec.add_dependency "mailkick", ">= 2", "< 4"
   spec.add_dependency "mrml", "~> 1.10"
   spec.add_dependency "csv"
   spec.add_dependency "image_processing", "~> 2.0"
