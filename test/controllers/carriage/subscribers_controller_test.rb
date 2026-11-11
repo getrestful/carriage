@@ -68,6 +68,20 @@ module Carriage
       assert_redirected_to "/carriage/lists/#{list.id}"
     end
 
+    test "resend_confirmation restarts the link expiry shown in the list" do
+      list = Carriage::List.create!(name: "Weekly")
+      subscription = travel_to(4.days.ago) { list.add_subscriber(email: "a@example.com", require_confirmation: true) }
+
+      get "/carriage/lists/#{list.id}"
+      assert_select "span", text: /Link expired/
+
+      post "/carriage/lists/#{list.id}/subscribers/#{subscription.subscriber_id}/resend_confirmation"
+
+      assert_in_delta 3.days.from_now, subscription.reload.confirmation_expires_at, 1.second
+      get "/carriage/lists/#{list.id}"
+      assert_select "span", text: /Link expires/
+    end
+
     test "resend_confirmation does not mail a confirmed subscriber" do
       list = Carriage::List.create!(name: "Weekly")
       subscription = list.add_subscriber(email: "a@example.com")

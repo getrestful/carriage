@@ -43,7 +43,10 @@
           <% @list.field_names.each do |field_name| %>
             <td class="px-6 py-4 text-sm text-gray-500"><%= subscriber.custom_fields[field_name] %></td>
           <% end %>
-          <td class="px-6 py-4 text-sm"><%= render "carriage/shared/status_badge", status: subscription.status %></td>
+          <td class="px-6 py-4 text-sm">
+            <%= render "carriage/shared/status_badge", status: subscription.status %>
+            <%= render "carriage/subscribers/confirmation_expiry", subscription: subscription %>
+          </td>
           <td class="px-6 py-2 text-right text-sm">
             <div class="flex items-center justify-end gap-4 leading-none">
               <% if subscription.status == :pending %>

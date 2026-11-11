@@ -1,5 +1,7 @@
 module Carriage
   class Subscription < ApplicationRecord
+    CONFIRMATION_EXPIRY = 3.days
+
     belongs_to :list, class_name: "Carriage::List"
     belongs_to :subscriber, class_name: "Carriage::Subscriber"
 
@@ -22,7 +24,7 @@ module Carriage
     # block keying it to an attribute: re-clicking an already-used link within
     # the expiry window still resolves the record (confirm! is idempotent),
     # matching the "click twice, still fine" UX rather than one-time-use.
-    generates_token_for :confirm_subscription, expires_in: 3.days
+    generates_token_for :confirm_subscription, expires_in: CONFIRMATION_EXPIRY
 
     before_validation :auto_confirm, on: :create, unless: :require_confirmation
 
@@ -48,7 +50,12 @@ module Carriage
     end
 
     def send_confirmation_email
+      update_column(:confirmation_sent_at, Time.current)
       Carriage::ConfirmationMailer.confirm_email(self).deliver_later
+    end
+
+    def confirmation_expires_at
+      confirmation_sent_at + CONFIRMATION_EXPIRY if status == :pending && confirmation_sent_at
     end
 
     def unsubscribe!
