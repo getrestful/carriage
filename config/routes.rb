@@ -2,7 +2,9 @@ Carriage::Engine.routes.draw do
   root to: "dashboard#index"
 
   resources :lists do
-    resources :subscribers, only: [ :index, :new, :create, :edit, :update, :destroy ]
+    resources :subscribers, only: [ :index, :new, :create, :edit, :update, :destroy ] do
+      post :resend_confirmation, on: :member
+    end
     resource :csv_import, only: [ :new, :create ]
     get :export, on: :member
   end

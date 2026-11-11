@@ -51,6 +51,17 @@ module Carriage
       redirect_to list_path(@list), notice: "Subscriber removed."
     end
 
+    def resend_confirmation
+      subscription = subscription_for(@list.subscribers.find(params[:id]))
+
+      if subscription.status == :pending
+        subscription.send_confirmation_email
+        redirect_back_or_to list_path(@list), notice: "Confirmation email sent."
+      else
+        redirect_back_or_to list_path(@list), alert: "Only pending subscribers can be sent a confirmation email."
+      end
+    end
+
     private
 
     def set_list

@@ -1,0 +1,7 @@
+<% if (expires_at = subscription.confirmation_expires_at) %>
+  <% if expires_at.past? %>
+    <span class="mt-1 block text-xs text-red-600">Link expired <%= l(expires_at, format: :short) %></span>
+  <% else %>
+    <span class="mt-1 block text-xs text-gray-500">Link expires <%= l(expires_at, format: :short) %></span>
+  <% end %>
+<% end %>
