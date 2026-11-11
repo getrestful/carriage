@@ -51,5 +51,31 @@ module Carriage
 
       assert_nil subscription.reload.unsubscribed_at
     end
+
+    test "resend_confirmation mails a pending subscriber again" do
+      list = Carriage::List.create!(name: "Weekly")
+      subscription = list.add_subscriber(email: "a@example.com", require_confirmation: true)
+      path = "/carriage/lists/#{list.id}/subscribers/#{subscription.subscriber_id}/resend_confirmation"
+
+      get "/carriage/lists/#{list.id}"
+      assert_select "form[action='#{path}']"
+      get "/carriage/lists/#{list.id}/subscribers"
+      assert_select "form[action='#{path}']"
+
+      assert_enqueued_emails 1 do
+        post path
+      end
+      assert_redirected_to "/carriage/lists/#{list.id}"
+    end
+
+    test "resend_confirmation does not mail a confirmed subscriber" do
+      list = Carriage::List.create!(name: "Weekly")
+      subscription = list.add_subscriber(email: "a@example.com")
+
+      assert_no_enqueued_emails do
+        post "/carriage/lists/#{list.id}/subscribers/#{subscription.subscriber_id}/resend_confirmation"
+      end
+      assert_equal "Only pending subscribers can be sent a confirmation email.", flash[:alert]
+    end
   end
 end
