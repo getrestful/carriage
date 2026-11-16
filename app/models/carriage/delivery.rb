@@ -6,8 +6,6 @@ module Carriage
     belongs_to :subscriber, class_name: "Carriage::Subscriber"
     has_many :clicks, class_name: "Carriage::Click", dependent: :destroy
 
-    # retrying: the last attempt raised and another one is scheduled.
-    # failed: every attempt raised; Carriage has given up on this delivery.
     enum :state, { pending: "pending", retrying: "retrying", sent: "sent", failed: "failed" }, default: "pending"
 
     scope :real, -> { where(is_test: false) }

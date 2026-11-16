@@ -17,12 +17,9 @@ module Carriage
     # Consolidates the "find-or-create subscriber, then join to this list" flow that the
     # CSV importer, the admin "add subscriber" form, and the public signup form each used to
     # reimplement independently (and had drifted on: only the signup form set
-    # require_confirmation). Calling it twice for the same email returns the existing
-    # subscription rather than raising, so host apps can call it unconditionally without
-    # checking membership first. With require_confirmation, a repeat signup for a pending or
-    # unsubscribed subscription sends a new confirmation email (see
-    # Subscription#renew_confirmation); without it, an existing subscription is left
-    # untouched, so admin adds and CSV imports never re-subscribe someone who opted out. Raises ActiveRecord::RecordInvalid (with the unsaved
+    # require_confirmation). Idempotent — calling it twice for the same email returns the
+    # existing subscription rather than raising, so host apps can call it unconditionally
+    # without checking membership first. Raises ActiveRecord::RecordInvalid (with the unsaved
     # Subscriber as e.record) if the email is missing/invalid; callers that need to redisplay
     # a form with errors should rescue and render from e.record.
     def add_subscriber(email:, first_name: nil, last_name: nil, custom_fields: {}, require_confirmation: false)

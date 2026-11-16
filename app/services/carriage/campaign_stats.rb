@@ -16,8 +16,6 @@ module Carriage
       deliveries.failed.count
     end
 
-    # Most recent error among deliveries that haven't gone out, to give the
-    # admin a hint at what's wrong (provider down, bad credentials, ...).
     def latest_delivery_error
       deliveries.where(state: %w[retrying failed]).order(updated_at: :desc).pick(:error_message)
     end

@@ -2,9 +2,7 @@ module Carriage
   class DeliverSubscriberJob < ApplicationJob
     queue_as :default
 
-    # The block runs only once the attempts are used up: that's the point where
-    # a delivery stops being "retrying" and becomes "failed". Re-raises so the
-    # queue adapter still records the job as failed.
+    # The block runs once the attempts are used up.
     retry_on StandardError, wait: :polynomially_longer, attempts: Carriage.delivery_attempts do |job, error|
       Carriage::Delivery.where(id: job.arguments.first).update_all(state: "failed", updated_at: Time.current)
       raise error
