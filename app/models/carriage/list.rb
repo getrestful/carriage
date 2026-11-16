@@ -29,9 +29,12 @@ module Carriage
       subscriber.custom_fields = subscriber.custom_fields.merge(custom_fields.slice(*field_names))
       subscriber.save!
 
-      subscriptions.find_or_create_by(subscriber: subscriber) do |subscription|
-        subscription.require_confirmation = require_confirmation
+      subscription = subscriptions.find_or_create_by(subscriber: subscriber) do |new_subscription|
+        new_subscription.require_confirmation = require_confirmation
       end
+      already_existed = subscription.persisted? && !subscription.previously_new_record?
+      subscription.renew_confirmation if require_confirmation && already_existed
+      subscription
     end
 
     def field_names

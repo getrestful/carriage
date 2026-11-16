@@ -8,6 +8,18 @@ module Carriage
       deliveries.sent.count
     end
 
+    def retrying_count
+      deliveries.retrying.count
+    end
+
+    def failed_count
+      deliveries.failed.count
+    end
+
+    def latest_delivery_error
+      deliveries.where(state: %w[retrying failed]).order(updated_at: :desc).pick(:error_message)
+    end
+
     def opens_count
       deliveries.where.not(opened_at: nil).count
     end

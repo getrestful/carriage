@@ -6,7 +6,8 @@ module Carriage
     belongs_to :subscriber, class_name: "Carriage::Subscriber"
     has_many :clicks, class_name: "Carriage::Click", dependent: :destroy
 
-    enum :state, { pending: "pending", sent: "sent", failed: "failed" }, default: "pending"
+    enum :state, { pending: "pending", retrying: "retrying", sent: "sent", failed: "failed", skipped: "skipped" },
+         default: "pending"
 
     scope :real, -> { where(is_test: false) }
 

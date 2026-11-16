@@ -60,6 +60,26 @@ Set a default From address and make sure `config.action_mailer.default_url_optio
 Carriage.default_from_address = "news@yourapp.com"
 ```
 
+### Delivery retries
+
+Carriage retries its own mail (campaign and confirmation emails) when the
+host's delivery method raises, e.g. because the mail provider is down. It makes
+up to 10 attempts with polynomially growing waits, which spans a bit over
+4 hours. While attempts remain, a campaign delivery is in the `retrying` state;
+after the last one it becomes `failed` and the error is raised to your queue
+adapter. The campaign page shows how many deliveries are retrying or failed,
+with the latest error. To change the number of attempts:
+
+```ruby
+# config/initializers/carriage.rb
+Carriage.delivery_attempts = 5
+```
+
+Retries only happen if delivery errors are raised, so leave
+`config.action_mailer.raise_delivery_errors` at its default of `true`.
+Carriage's mailers use their own delivery job (`Carriage::MailDeliveryJob`)
+regardless of the host's `config.action_mailer.delivery_job`.
+
 ### Scheduling campaign sends
 
 Carriage does not bundle a scheduler. Add a periodic call to the host app's
@@ -114,6 +134,14 @@ click a confirmation link would just mean CSV-imported existing customers
 silently stop receiving mail until they re-confirm. If you need a
 particular call to require confirmation, pass `require_confirmation: true`
 to `List#add_subscriber`.
+
+**Signing up again.** If someone signs up for a list they already have a
+subscription on, what happens depends on its status. A pending subscription
+gets a fresh confirmation email (at most one every 5 minutes), since the earlier
+link may have expired. An unsubscribed one goes back to pending and gets a
+confirmation email, so they only rejoin by clicking the link. A confirmed one
+is left alone. Repeat adds through the admin UI or CSV import never change an
+existing subscription.
 
 **Customizing text.** All signup/confirmation copy — form labels, the
 "check your email" page, the confirmation page, the confirmation email's

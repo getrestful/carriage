@@ -5,10 +5,7 @@ module Carriage
     include ActionMailer::TestHelper
 
     test "delivers the mail and marks the delivery sent" do
-      list = Carriage::List.create!(name: "Weekly")
-      campaign = Carriage::Campaign.create!(list: list, name: "Launch", subject: "Hi", body_html: "<p>hi</p>")
-      subscriber = Carriage::Subscriber.create!(email: "a@example.com")
-      delivery = Carriage::Delivery.create!(campaign: campaign, subscriber: subscriber)
+      delivery = create_delivery
 
       assert_emails 1 do
         Carriage::DeliverSubscriberJob.perform_now(delivery.id)
@@ -18,20 +15,88 @@ module Carriage
       assert delivery.sent_at.present?
     end
 
-    test "marks the delivery failed and schedules a retry on mailer error" do
-      list = Carriage::List.create!(name: "Weekly")
-      campaign = Carriage::Campaign.create!(list: list, name: "Launch", subject: "Hi", body_html: "<p>hi</p>")
-      subscriber = Carriage::Subscriber.create!(email: "a@example.com")
-      delivery = Carriage::Delivery.create!(campaign: campaign, subscriber: subscriber)
+    test "marks the delivery retrying and schedules a retry on mailer error" do
+      delivery = create_delivery
 
-      Carriage::CampaignMailer.define_singleton_method(:campaign_email) { |_delivery| raise "boom" }
+      failing_campaign_mailer do
+        assert_enqueued_with(job: Carriage::DeliverSubscriberJob) do
+          Carriage::DeliverSubscriberJob.perform_now(delivery.id)
+        end
+      end
 
-      assert_enqueued_with(job: Carriage::DeliverSubscriberJob) do
-        Carriage::DeliverSubscriberJob.perform_now(delivery.id)
+      assert delivery.reload.retrying?
+      assert_equal "boom", delivery.error_message
+    end
+
+    test "marks the delivery failed and raises once the attempts are used up" do
+      delivery = create_delivery
+      job = Carriage::DeliverSubscriberJob.new(delivery.id)
+      job.exception_executions = { "[StandardError]" => Carriage.delivery_attempts - 1 }
+
+      failing_campaign_mailer do
+        assert_no_enqueued_jobs do
+          assert_raises(RuntimeError) { job.perform_now }
+        end
       end
 
       assert delivery.reload.failed?
       assert_equal "boom", delivery.error_message
+    end
+
+    test "a retry that succeeds marks the delivery sent" do
+      delivery = create_delivery
+      delivery.update!(state: :retrying, error_message: "boom")
+
+      assert_emails 1 do
+        Carriage::DeliverSubscriberJob.perform_now(delivery.id)
+      end
+
+      assert delivery.reload.sent?
+    end
+
+    test "skips a recipient who unsubscribed while the delivery was retrying" do
+      delivery = create_delivery
+      delivery.update!(state: :retrying, error_message: "boom")
+      delivery.subscription.unsubscribe!
+
+      assert_no_emails do
+        assert_no_enqueued_jobs { Carriage::DeliverSubscriberJob.perform_now(delivery.id) }
+      end
+
+      assert delivery.reload.skipped?
+    end
+
+    test "skips a recipient with no subscription on the campaign's list" do
+      list = Carriage::List.create!(name: "Other")
+      campaign = Carriage::Campaign.create!(list: list, name: "Launch", subject: "Hi", body_html: "<p>hi</p>")
+      delivery = Carriage::Delivery.create!(campaign: campaign, subscriber: Carriage::Subscriber.create!(email: "b@example.com"))
+
+      assert_no_emails { Carriage::DeliverSubscriberJob.perform_now(delivery.id) }
+
+      assert delivery.reload.skipped?
+    end
+
+    test "is dropped without a retry when the delivery no longer exists" do
+      delivery = create_delivery
+      delivery.subscriber.destroy!
+
+      assert_no_enqueued_jobs do
+        assert_nothing_raised { Carriage::DeliverSubscriberJob.perform_now(delivery.id) }
+      end
+    end
+
+    private
+
+    def create_delivery
+      list = Carriage::List.create!(name: "Weekly")
+      campaign = Carriage::Campaign.create!(list: list, name: "Launch", subject: "Hi", body_html: "<p>hi</p>")
+      subscriber = list.add_subscriber(email: "a@example.com").subscriber
+      Carriage::Delivery.create!(campaign: campaign, subscriber: subscriber)
+    end
+
+    def failing_campaign_mailer
+      Carriage::CampaignMailer.define_singleton_method(:campaign_email) { |_delivery| raise "boom" }
+      yield
     ensure
       Carriage::CampaignMailer.singleton_class.send(:remove_method, :campaign_email)
     end
