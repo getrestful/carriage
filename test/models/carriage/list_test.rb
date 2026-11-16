@@ -82,6 +82,53 @@ module Carriage
       assert_not subscription.confirmed?
     end
 
+    test "add_subscriber with require_confirmation re-sends the confirmation to a pending subscriber signing up again" do
+      list = Carriage::List.create!(name: "Weekly")
+      first = list.add_subscriber(email: "a@example.com", require_confirmation: true)
+      first.update_column(:confirmation_sent_at, 4.days.ago)
+
+      second = nil
+      assert_enqueued_jobs 1, only: Carriage::MailDeliveryJob do
+        second = list.add_subscriber(email: "a@example.com", require_confirmation: true)
+      end
+
+      assert_equal first, second
+      assert_equal :pending, second.status
+    end
+
+    test "add_subscriber with require_confirmation asks an unsubscribed subscriber to confirm again" do
+      list = Carriage::List.create!(name: "Weekly")
+      list.add_subscriber(email: "a@example.com").unsubscribe!
+
+      subscription = nil
+      assert_enqueued_jobs 1, only: Carriage::MailDeliveryJob do
+        subscription = list.add_subscriber(email: "a@example.com", require_confirmation: true)
+      end
+
+      assert_equal :pending, subscription.status
+    end
+
+    test "add_subscriber with require_confirmation sends nothing to an already confirmed subscriber" do
+      list = Carriage::List.create!(name: "Weekly")
+      list.add_subscriber(email: "a@example.com")
+
+      assert_no_enqueued_jobs only: Carriage::MailDeliveryJob do
+        list.add_subscriber(email: "a@example.com", require_confirmation: true)
+      end
+    end
+
+    test "add_subscriber without require_confirmation leaves an unsubscribed subscriber unsubscribed" do
+      list = Carriage::List.create!(name: "Weekly")
+      list.add_subscriber(email: "a@example.com").unsubscribe!
+
+      subscription = nil
+      assert_no_enqueued_jobs only: Carriage::MailDeliveryJob do
+        subscription = list.add_subscriber(email: "a@example.com")
+      end
+
+      assert_equal :unsubscribed, subscription.status
+    end
+
     test "add_subscriber raises with the invalid subscriber on a bad email" do
       list = Carriage::List.create!(name: "Weekly")
 

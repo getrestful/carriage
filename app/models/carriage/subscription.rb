@@ -1,6 +1,9 @@
 module Carriage
   class Subscription < ApplicationRecord
     CONFIRMATION_EXPIRY = 3.days
+    # Minimum gap between confirmation emails triggered by repeat signups, so
+    # the public form can't be used to flood an address with them.
+    CONFIRMATION_RESEND_INTERVAL = 5.minutes
 
     belongs_to :list, class_name: "Carriage::List"
     belongs_to :subscriber, class_name: "Carriage::Subscriber"
@@ -52,6 +55,22 @@ module Carriage
     def send_confirmation_email
       update_column(:confirmation_sent_at, Time.current)
       Carriage::ConfirmationMailer.confirm_email(self).deliver_later
+    end
+
+    # Someone signed up again for a list they already have a subscription on.
+    # A pending subscription gets a fresh confirmation link (the old one may
+    # have expired). An unsubscribed one goes back to pending rather than
+    # straight to subscribed: only a click on the emailed link proves the
+    # address owner wants back in. A confirmed subscription is left alone.
+    def renew_confirmation
+      return if status == :subscribed
+      return if status == :pending && confirmation_sent_at&.after?(CONFIRMATION_RESEND_INTERVAL.ago)
+
+      if unsubscribed_at.present?
+        update!(unsubscribed_at: nil, confirmed_at: nil)
+        subscribe_via_mailkick
+      end
+      send_confirmation_email
     end
 
     def confirmation_expires_at

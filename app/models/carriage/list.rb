@@ -17,9 +17,12 @@ module Carriage
     # Consolidates the "find-or-create subscriber, then join to this list" flow that the
     # CSV importer, the admin "add subscriber" form, and the public signup form each used to
     # reimplement independently (and had drifted on: only the signup form set
-    # require_confirmation). Idempotent — calling it twice for the same email returns the
-    # existing subscription rather than raising, so host apps can call it unconditionally
-    # without checking membership first. Raises ActiveRecord::RecordInvalid (with the unsaved
+    # require_confirmation). Calling it twice for the same email returns the existing
+    # subscription rather than raising, so host apps can call it unconditionally without
+    # checking membership first. With require_confirmation, a repeat signup for a pending or
+    # unsubscribed subscription sends a new confirmation email (see
+    # Subscription#renew_confirmation); without it, an existing subscription is left
+    # untouched, so admin adds and CSV imports never re-subscribe someone who opted out. Raises ActiveRecord::RecordInvalid (with the unsaved
     # Subscriber as e.record) if the email is missing/invalid; callers that need to redisplay
     # a form with errors should rescue and render from e.record.
     def add_subscriber(email:, first_name: nil, last_name: nil, custom_fields: {}, require_confirmation: false)
@@ -29,9 +32,12 @@ module Carriage
       subscriber.custom_fields = subscriber.custom_fields.merge(custom_fields.slice(*field_names))
       subscriber.save!
 
-      subscriptions.find_or_create_by(subscriber: subscriber) do |subscription|
-        subscription.require_confirmation = require_confirmation
+      subscription = subscriptions.find_or_create_by(subscriber: subscriber) do |new_subscription|
+        new_subscription.require_confirmation = require_confirmation
       end
+      already_existed = subscription.persisted? && !subscription.previously_new_record?
+      subscription.renew_confirmation if require_confirmation && already_existed
+      subscription
     end
 
     def field_names

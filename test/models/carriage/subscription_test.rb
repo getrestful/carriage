@@ -95,5 +95,63 @@ module Carriage
       # never derive from it.
       assert pending.subscriber.subscribed?(list.name)
     end
+
+    test "renew_confirmation sends a fresh confirmation email to a pending subscription" do
+      subscription = create_pending_subscription
+      subscription.update_column(:confirmation_sent_at, 1.hour.ago)
+
+      assert_enqueued_jobs 1, only: Carriage::MailDeliveryJob do
+        subscription.renew_confirmation
+      end
+
+      assert_equal :pending, subscription.status
+      assert_in_delta Time.current, subscription.confirmation_sent_at, 5.seconds
+    end
+
+    test "renew_confirmation does not resend within the resend interval" do
+      subscription = create_pending_subscription
+
+      assert_no_enqueued_jobs only: Carriage::MailDeliveryJob do
+        subscription.renew_confirmation
+      end
+    end
+
+    test "renew_confirmation puts an unsubscribed subscription back to pending and emails a confirmation link" do
+      list = Carriage::List.create!(name: "Weekly")
+      subscriber = Carriage::Subscriber.create!(email: "a@example.com")
+      subscription = Carriage::Subscription.create!(list: list, subscriber: subscriber)
+      subscription.unsubscribe!
+
+      assert_enqueued_jobs 1, only: Carriage::MailDeliveryJob do
+        subscription.renew_confirmation
+      end
+
+      assert_equal :pending, subscription.reload.status
+      assert_not_includes Carriage::Subscription.active, subscription
+      assert subscriber.subscribed?(list.name)
+
+      subscription.confirm!
+      assert_equal :subscribed, subscription.status
+    end
+
+    test "renew_confirmation leaves a confirmed subscription alone" do
+      list = Carriage::List.create!(name: "Weekly")
+      subscriber = Carriage::Subscriber.create!(email: "a@example.com")
+      subscription = Carriage::Subscription.create!(list: list, subscriber: subscriber)
+
+      assert_no_enqueued_jobs only: Carriage::MailDeliveryJob do
+        subscription.renew_confirmation
+      end
+
+      assert_equal :subscribed, subscription.status
+    end
+
+    private
+
+    def create_pending_subscription
+      list = Carriage::List.create!(name: "Weekly")
+      subscriber = Carriage::Subscriber.create!(email: "a@example.com")
+      Carriage::Subscription.create!(list: list, subscriber: subscriber, require_confirmation: true)
+    end
   end
 end

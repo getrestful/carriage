@@ -135,6 +135,14 @@ silently stop receiving mail until they re-confirm. If you need a
 particular call to require confirmation, pass `require_confirmation: true`
 to `List#add_subscriber`.
 
+**Signing up again.** If someone signs up for a list they already have a
+subscription on, what happens depends on its status. A pending subscription
+gets a fresh confirmation email (at most one every 5 minutes), since the earlier
+link may have expired. An unsubscribed one goes back to pending and gets a
+confirmation email, so they only rejoin by clicking the link. A confirmed one
+is left alone. Repeat adds through the admin UI or CSV import never change an
+existing subscription.
+
 **Customizing text.** All signup/confirmation copy — form labels, the
 "check your email" page, the confirmation page, the confirmation email's
 subject/body — lives under the `carriage.public.signups.*`,
