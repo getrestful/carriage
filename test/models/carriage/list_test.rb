@@ -75,7 +75,7 @@ module Carriage
       list = Carriage::List.create!(name: "Weekly")
 
       subscription = nil
-      assert_enqueued_jobs 1, only: ActionMailer::MailDeliveryJob do
+      assert_enqueued_jobs 1, only: Carriage::MailDeliveryJob do
         subscription = list.add_subscriber(email: "a@example.com", require_confirmation: true)
       end
 

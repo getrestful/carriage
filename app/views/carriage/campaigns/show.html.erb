@@ -15,6 +15,26 @@
   <%= button_to "Duplicate", duplicate_campaign_path(@campaign), method: :post, class: "inline-flex cursor-pointer items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
 </div>
 
+<% if @stats.retrying_count.positive? || @stats.failed_count.positive? %>
+  <div class="mb-8 space-y-3">
+    <% if @stats.retrying_count.positive? %>
+      <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+        <span class="font-semibold"><%= pluralize(@stats.retrying_count, "delivery") %> still retrying.</span>
+        Sending has failed so far; Carriage keeps trying automatically.
+      </div>
+    <% end %>
+    <% if @stats.failed_count.positive? %>
+      <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+        <span class="font-semibold"><%= pluralize(@stats.failed_count, "delivery") %> failed.</span>
+        All attempts were used up; these emails were not sent.
+      </div>
+    <% end %>
+    <% if @stats.latest_delivery_error.present? %>
+      <p class="text-sm text-gray-500">Latest error: <code class="text-gray-700"><%= truncate(@stats.latest_delivery_error, length: 200) %></code></p>
+    <% end %>
+  </div>
+<% end %>
+
 <h2 class="mb-3 text-base font-semibold text-gray-900">Stats</h2>
 <div class="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
   <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">

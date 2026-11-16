@@ -60,6 +60,26 @@ Set a default From address and make sure `config.action_mailer.default_url_optio
 Carriage.default_from_address = "news@yourapp.com"
 ```
 
+### Delivery retries
+
+Carriage retries its own mail (campaign and confirmation emails) when the
+host's delivery method raises, e.g. because the mail provider is down. It makes
+up to 10 attempts with polynomially growing waits, which spans a bit over
+4 hours. While attempts remain, a campaign delivery is in the `retrying` state;
+after the last one it becomes `failed` and the error is raised to your queue
+adapter. The campaign page shows how many deliveries are retrying or failed,
+with the latest error. To change the number of attempts:
+
+```ruby
+# config/initializers/carriage.rb
+Carriage.delivery_attempts = 5
+```
+
+Retries only happen if delivery errors are raised, so leave
+`config.action_mailer.raise_delivery_errors` at its default of `true`.
+Carriage's mailers use their own delivery job (`Carriage::MailDeliveryJob`)
+regardless of the host's `config.action_mailer.delivery_job`.
+
 ### Scheduling campaign sends
 
 Carriage does not bundle a scheduler. Add a periodic call to the host app's

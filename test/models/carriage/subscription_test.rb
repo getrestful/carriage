@@ -49,7 +49,7 @@ module Carriage
       subscriber = Carriage::Subscriber.create!(email: "a@example.com")
 
       subscription = nil
-      assert_enqueued_jobs 1, only: ActionMailer::MailDeliveryJob do
+      assert_enqueued_jobs 1, only: Carriage::MailDeliveryJob do
         subscription = Carriage::Subscription.create!(list: list, subscriber: subscriber, require_confirmation: true)
       end
 

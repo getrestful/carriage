@@ -16,7 +16,7 @@ module Carriage
       test "create adds an unconfirmed subscription and sends a confirmation email" do
         list = Carriage::List.create!(name: "Weekly", fields_text: "company")
 
-        assert_enqueued_jobs 1, only: ActionMailer::MailDeliveryJob do
+        assert_enqueued_jobs 1, only: Carriage::MailDeliveryJob do
           post "/c/lists/#{list.id}/signup", params: {
             subscriber: { email: "a@example.com", first_name: "Ann", custom_fields: { "company" => "Acme" } }
           }

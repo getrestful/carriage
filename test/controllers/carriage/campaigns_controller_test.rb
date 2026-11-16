@@ -17,6 +17,27 @@ module Carriage
       assert_match "Sent", response.body
     end
 
+    test "shows deliveries that are still retrying or have failed" do
+      retrying = Carriage::Subscriber.create!(email: "a@example.com")
+      failed = Carriage::Subscriber.create!(email: "b@example.com")
+      Carriage::Delivery.create!(campaign: @campaign, subscriber: retrying, state: :retrying, error_message: "connection refused")
+      Carriage::Delivery.create!(campaign: @campaign, subscriber: failed, state: :failed, error_message: "old", updated_at: 1.hour.ago)
+
+      get "/carriage/campaigns/#{@campaign.id}"
+
+      assert_response :success
+      assert_match "1 delivery still retrying", response.body
+      assert_match "1 delivery failed", response.body
+      assert_match "connection refused", response.body
+    end
+
+    test "shows no delivery warnings when everything went out" do
+      get "/carriage/campaigns/#{@campaign.id}"
+
+      assert_no_match "still retrying", response.body
+      assert_no_match "delivery failed", response.body
+    end
+
     test "preview renders compiled MJML html" do
       get "/carriage/campaigns/#{@campaign.id}/preview"
 
