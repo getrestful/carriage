@@ -12,6 +12,8 @@ module Carriage
     def perform(delivery_id)
       delivery = Carriage::Delivery.find(delivery_id)
       return if delivery.sent?
+      # The recipient may have unsubscribed since the campaign was queued.
+      return delivery.update!(state: :skipped) unless delivery.subscription&.status == :subscribed
 
       Carriage::CampaignMailer.campaign_email(delivery).deliver_now
       delivery.update!(state: :sent, sent_at: Time.current)

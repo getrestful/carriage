@@ -5,10 +5,7 @@ module Carriage
     include ActionMailer::TestHelper
 
     test "delivers the mail and marks the delivery sent" do
-      list = Carriage::List.create!(name: "Weekly")
-      campaign = Carriage::Campaign.create!(list: list, name: "Launch", subject: "Hi", body_html: "<p>hi</p>")
-      subscriber = Carriage::Subscriber.create!(email: "a@example.com")
-      delivery = Carriage::Delivery.create!(campaign: campaign, subscriber: subscriber)
+      delivery = create_delivery
 
       assert_emails 1 do
         Carriage::DeliverSubscriberJob.perform_now(delivery.id)
@@ -57,6 +54,28 @@ module Carriage
       assert delivery.reload.sent?
     end
 
+    test "skips a recipient who unsubscribed while the delivery was retrying" do
+      delivery = create_delivery
+      delivery.update!(state: :retrying, error_message: "boom")
+      delivery.subscription.unsubscribe!
+
+      assert_no_emails do
+        assert_no_enqueued_jobs { Carriage::DeliverSubscriberJob.perform_now(delivery.id) }
+      end
+
+      assert delivery.reload.skipped?
+    end
+
+    test "skips a recipient with no subscription on the campaign's list" do
+      list = Carriage::List.create!(name: "Other")
+      campaign = Carriage::Campaign.create!(list: list, name: "Launch", subject: "Hi", body_html: "<p>hi</p>")
+      delivery = Carriage::Delivery.create!(campaign: campaign, subscriber: Carriage::Subscriber.create!(email: "b@example.com"))
+
+      assert_no_emails { Carriage::DeliverSubscriberJob.perform_now(delivery.id) }
+
+      assert delivery.reload.skipped?
+    end
+
     test "is dropped without a retry when the delivery no longer exists" do
       delivery = create_delivery
       delivery.subscriber.destroy!
@@ -71,7 +90,7 @@ module Carriage
     def create_delivery
       list = Carriage::List.create!(name: "Weekly")
       campaign = Carriage::Campaign.create!(list: list, name: "Launch", subject: "Hi", body_html: "<p>hi</p>")
-      subscriber = Carriage::Subscriber.create!(email: "a@example.com")
+      subscriber = list.add_subscriber(email: "a@example.com").subscriber
       Carriage::Delivery.create!(campaign: campaign, subscriber: subscriber)
     end
 
