@@ -7,6 +7,7 @@ module Carriage
       Carriage::Delivery.where(id: job.arguments.first).update_all(state: "failed", updated_at: Time.current)
       raise error
     end
+    discard_on ActiveRecord::RecordNotFound
 
     def perform(delivery_id)
       delivery = Carriage::Delivery.find(delivery_id)

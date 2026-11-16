@@ -36,6 +36,17 @@ module Carriage
       end
     end
 
+    test "is dropped without a retry when the subscription no longer exists" do
+      @subscription.send_confirmation_email
+      job = enqueued_jobs.last
+      @subscription.subscriber.destroy!
+      clear_enqueued_jobs
+
+      assert_no_enqueued_jobs do
+        assert_nothing_raised { ActiveJob::Base.execute(job) }
+      end
+    end
+
     private
 
     def build_job

@@ -57,6 +57,15 @@ module Carriage
       assert delivery.reload.sent?
     end
 
+    test "is dropped without a retry when the delivery no longer exists" do
+      delivery = create_delivery
+      delivery.subscriber.destroy!
+
+      assert_no_enqueued_jobs do
+        assert_nothing_raised { Carriage::DeliverSubscriberJob.perform_now(delivery.id) }
+      end
+    end
+
     private
 
     def create_delivery
